@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="pt-MZ">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EXCEL MONEY — Domina Academy | Aprende. Cria. Ganha.</title>
+  <meta name="description" content="Transforma o Excel numa fonte de renda real. Curso prático, templates automáticos e sistema de vendas para Moçambique (M-Pesa) e internacional (Hotmart)." />
+  <meta name="theme-color" content="#052922">
+
+  <!-- Structured data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"Domina Academy - Excel Money",
+    "url":"https://domina.academy/"
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Variables ---------- */
+    :root{
+      --bg-1:#031010; --bg-2:#042522; --accent:#06b58b; --accent-2:#ffd166; --muted:rgba(255,255,255,0.78);
+      --glass: rgba(255,255,255,0.03); --card: rgba(255,255,255,0.025); --radius:16px; --container:1150px; --shadow:0 20px 40px rgba(2,8,10,0.6);
+      --glass-2: rgba(255,255,255,0.02);
+      --success: #16a34a;
+      --danger: #ef4444;
+    }
+
+    /* ---------- Reset & base ---------- */
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));color:#fff;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    .wrap{max-width:var(--container);margin:0 auto;padding:28px}
+
+    /* ---------- Header ---------- */
+    header.site-header{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(6px);box-shadow:var(--shadow);position:sticky;top:16px;z-index:50}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#042;font-family:Poppins}
+    .brand h1{font-family:Poppins,Inter;margin:0;font-size:18px}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+    nav{display:flex;gap:14px;align-items:center}
+    .nav-links a{font-weight:600;padding:8px 12px;border-radius:10px;color:rgba(255,255,255,0.9)}
+    .nav-links a:hover{background:rgba(255,255,255,0.02)}
+
+    /* ---------- HERO ---------- */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center;padding:48px 0}
+    .hero-title{font-family:Poppins;font-size:44px;line-height:1.02;margin:0;color:#fff}
+    .hero-sub{color:var(--muted);font-size:16px;margin-top:12px}
+    .ctas{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+    .btn{padding:12px 18px;border-radius:12px;font-weight:700;border:none;cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#03a073);color:#042;box-shadow:0 12px 32px rgba(6,181,139,0.12)}
+    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    .kpis{display:flex;gap:12px;margin-top:20px}
+    .kpi{background:var(--card);padding:12px 16px;border-radius:12px;text-align:center;min-width:110px}
+    .kpi .num{font-weight:800;font-size:18px}
+
+    /* Mockup card */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--shadow)}
+    .mockup img{width:100%;height:300px;object-fit:cover;border-radius:12px}
+
+    /* ---------- Sections ---------- */
+    section{padding:28px 0}
+    section h3{font-size:20px;margin:0 0 12px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .feature{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02)}
+
+    /* Pricing */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+    .plan{padding:18px;border-radius:12px}
+    .price{font-size:28px;font-weight:800}
+    .currency-toggle{display:inline-flex;gap:8px;padding:6px;background:var(--glass);border-radius:999px}
+    .currency-toggle button{background:transparent;border:none;color:var(--muted);padding:6px 10px;border-radius:999px;cursor:pointer}
+    .currency-toggle button.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#042}
+
+    /* Testimonials */
+    .testimonial{padding:18px;border-radius:12px}
+
+    /* FAQ */
+    .faq{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+    /* Footer */
+    footer{margin-top:48px;padding:28px 0;border-top:1px solid rgba(255,255,255,0.03)}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.7));z-index:60}
+    .modal.open{display:flex}
+    .modal .box{background:linear-gradient(180deg,#042223,#072a26);padding:20px;border-radius:12px;width:540px;max-width:94%;box-shadow:var(--shadow)}
+
+    /* Animations */
+    .reveal{opacity:0;transform:translateY(12px);transition:all 700ms cubic-bezier(.2,.9,.3,1)}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* Micro interactions */
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.04);font-weight:700}
+
+    /* Form */
+    .input{width:100%;padding:12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .grid-3{grid-template-columns:1fr}
+      .pricing{grid-template-columns:1fr}
+      .faq{grid-template-columns:1fr}
+      .hero-title{font-size:28px}
+    }
+
+    @media (max-width:520px){
+      .brand h1{font-size:16px}
+      .hero-title{font-size:24px}
+      .mockup img{height:220px}
+    }
+
+    /* Accessibility focus */
+    a:focus, button:focus, input:focus{outline:3px solid rgba(6,181,139,0.12);outline-offset:3px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header reveal" role="banner">
+      <div class="brand">
+        <div class="logo" aria-hidden>DA</div>
+        <div>
+          <h1>Domina Academy</h1>
+          <p class="muted">Excel Money — Aprende. Cria. Ganha.</p>
+        </div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <div class="nav-links">
+          <a href="#features">Recursos</a>
+          <a href="#pricing">Produtos</a>
+          <a href="#testimonials">Provas</a>
+          <a href="#faq">FAQ</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero reveal" aria-labelledby="hero-title">
+        <div>
+          <h2 id="hero-title" class="hero-title">Transforma o Excel numa fonte de renda real — sem mostrar o rosto.</h2>
+          <p class="hero-sub">Curso prático + templates automáticos + funil low-ticket que vende. Vendas locais via M-Pesa (WhatsApp) e internacional via Hotmart.</p>
+
+          <div class="ctas">
+            <button class="btn btn-primary" onclick="openHotmart()">Comprar (Hotmart)</button>
+            <button class="btn btn-outline" onclick="openWhatsApp('course')">Comprar (M-Pesa via WhatsApp)</button>
+            <button class="btn btn-outline" onclick="openModal('lead')">Amostra grátis</button>
+          </div>
+
+          <div class="kpis" aria-hidden>
+            <div class="kpi"><div class="num">+50</div><div class="muted">Modelos</div></div>
+            <div class="kpi"><div class="num">Prático</div><div class="muted">Aplicável</div></div>
+            <div class="kpi"><div class="num">Low-Ticket</div><div class="muted">Vendas em volume</div></div>
+          </div>
+        </div>
+
+        <aside class="card" style="width:420px">
+          <div class="mockup"><img loading="lazy" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Capa do eBook"></div>
+          <div style="margin-top:12px">
+            <h3 style="margin:0 0 8px">Ebook — Ganhe Dinheiro com Excel</h3>
+            <p class="muted" style="margin:0 0 8px">15 páginas com plano de ação e planilha pronta.</p>
+            <div style="display:flex;gap:8px;align-items:center"><div class="pill">47 MZN</div><div class="muted">≈ R$ 3,96</div></div>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn btn-primary" onclick="openModal('purchase-ebook')">Comprar Ebook</button>
+              <button class="btn btn-outline" onclick="openHotmart()">Comprar Curso</button>
+            </div>
+            <p class="muted" style="margin-top:10px;font-size:13px">Entrega imediata. Suporte via WhatsApp.</p>
+          </div>
+        </aside>
+      </section>
+
+      <!-- FEATURES -->
+      <section id="features" class="reveal">
+        <h3>O que vais aprender</h3>
+        <div class="grid-3" role="list">
+          <div class="feature" role="listitem">
+            <h4>Planilhas Automáticas</h4>
+            <p class="muted">Templates prontos para vender e adaptar: finanças, vendas, estoque e relatórios.</p>
+          </div>
+          <div class="feature" role="listitem">
+            <h4>Funil Low-Ticket</h4>
+            <p class="muted">Como vender muito com produtos de baixo preço e alto volume.</p>
+          </div>
+          <div class="feature" role="listitem">
+            <h4>Vendas Sem Mostrar Rosto</h4>
+            <p class="muted">Táticas de conteúdo silencioso, mensagens prontas e sistema de vendas via WhatsApp.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS -->
+      <section id="testimonials" class="reveal">
+        <h3>Provas</h3>
+        <div class="grid-3">
+          <div class="card testimonial"><strong>Consegui minha primeira venda no mesmo dia</strong><div class="muted">— Aluno Anónimo</div></div>
+          <div class="card testimonial"><strong>Vendi 5 packs em 2 semanas</strong><div class="muted">— Usuário MZ</div></div>
+          <div class="card testimonial"><strong>Curso prático, sem enrolação</strong><div class="muted">— Cliente</div></div>
+        </div>
+      </section>
+
+      <!-- PRICING -->
+      <section id="pricing" class="reveal">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <h3>Preços & Produtos</h3>
+          <div class="currency-toggle" role="tablist" aria-label="Selecionar moeda">
+            <button id="btn-mzn" class="active" aria-pressed="true">MZN</button>
+            <button id="btn-brl" aria-pressed="false">BRL</button>
+          </div>
+        </div>
+
+        <div class="pricing" aria-live="polite">
+          <div class="plan card">
+            <h4>Ebook — Ganhe Dinheiro com Excel</h4>
+            <div class="price" data-mzn="47" data-brl="3.96">47 MZN</div>
+            <p class="muted">15 páginas + planilha modelo.</p>
+            <div style="margin-top:12px"><button class="btn btn-primary" onclick="openModal('purchase-ebook')">Comprar Ebook</button></div>
+          </div>
+
+          <div class="plan card">
+            <h4>Ebook — Excel Básico</h4>
+            <div class="price" data-mzn="257" data-brl="22">257 MZN</div>
+            <p class="muted">Guia completo para iniciantes — aprenda do zero.</p>
+            <div style="margin-top:12px"><button class="btn btn-outline" onclick="openModal('purchase-ebook-basic')">Comprar Ebook</button></div>
+          </div>
+
+          <div class="plan card">
+            <h4>Curso — Excel Básico (do zero)</h4>
+            <div class="price" data-mzn="527" data-brl="45">527 MZN</div>
+            <p class="muted">14 vídeos passo a passo + templates. Venda internacional via Hotmart.</p>
+            <div style="margin-top:12px"><button class="btn btn-primary" onclick="openHotmart()">Comprar Curso</button></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EBOOK PREVIEW -->
+      <section id="ebook" class="reveal">
+        <h3>Ebook — Preview & Compra</h3>
+        <div style="display:flex;gap:20px;flex-wrap:wrap">
+          <div style="flex:1;min-width:260px" class="card">
+            <h4>O que contém</h4>
+            <ul class="muted" style="margin:10px 0 0;padding-left:18px">
+              <li>5 formas práticas de ganhar dinheiro com Excel</li>
+              <li>Planilha modelo pronta</li>
+              <li>Passo-a-passo de vendas no WhatsApp</li>
+              <li>CTAs diretas para curso e templates</li>
+            </ul>
+            <div style="margin-top:16px"><button class="btn btn-primary" onclick="openModal('purchase-ebook')">Comprar Ebook — 47 MZN</button></div>
+          </div>
+
+          <div style="flex:1;min-width:260px" class="card">
+            <h4>Preview</h4>
+            <p class="muted">Sumário e primeira página liberados após pagamento.</p>
+            <img loading="lazy" src="https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="preview" style="width:100%;border-radius:12px;margin-top:12px">
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="reveal">
+        <h3>Dúvidas Frequentes</h3>
+        <div class="faq">
+          <div class="faq-item card"><strong>Como recebo o produto?</strong><p class="muted">Ebook e templates via link direto + envio no WhatsApp após confirmação. Curso via Hotmart (entrega automática).</p></div>
+          <div class="faq-item card"><strong>Pagamento em Moçambique?</strong><p class="muted">Envie comprovativo de M-Pesa no WhatsApp e liberamos o acesso.</p></div>
+          <div class="faq-item card"><strong>Suporte?</strong><p class="muted">Suporte via WhatsApp e grupo exclusivo para compradores.</p></div>
+          <div class="faq-item card"><strong>Garantia?</strong><p class="muted">Reembolso parcial em 7 dias se não ficar satisfeito (consulte termos).</p></div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="reveal">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div>
+          <strong>EXCEL MONEY</strong>
+          <div class="muted">by Domina Academy — Aprende. Cria. Ganha.</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="openHotmart()">Comprar (Hotmart)</button>
+          <button class="btn btn-outline" onclick="openWhatsApp('course')">Comprar (M-Pesa)</button>
+        </div>
+      </div>
+      <div style="margin-top:18px;font-size:12px;color:rgba(255,255,255,0.5)">© EXCEL MONEY — Domina Academy — 2025</div>
+    </footer>
+  </div>
+
+  <!-- Modal structure -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true">
+    <div class="box" role="document">
+      <div id="modal-content"></div>
+      <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+        <button class="btn btn-outline" onclick="closeModal()">Fechar</button>
+        <button id="modal-action" class="btn btn-primary">Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ---------- Configuration ---------- */
+    const HOTMART_LINK = 'https://pay.hotmart.com/D102626828S';
+    const WHATSAPP_NUMBER = '258833869285'; // substitui pelo teu numero se necessario
+
+    /* Product pricing (data driven) */
+    const PRODUCTS = {
+      ebook_intro: { id:'ebook_intro', title:'Ebook — Ganhe Dinheiro com Excel', mzn:47, brl:3.96 },
+      ebook_basic:{ id:'ebook_basic', title:'Ebook — Excel Básico', mzn:257, brl:22 },
+      course_basic:{ id:'course_basic', title:'Curso — Excel Básico (do zero)', mzn:527, brl:45 }
+    };
+
+    /* ---------- Helpers ---------- */
+    function openHotmart(){ window.open(HOTMART_LINK,'_blank'); }
+    function openWhatsApp(product){
+      const p = PRODUCTS[product] || PRODUCTS.course_basic;
+      const text = encodeURIComponent(`Quero comprar: ${p.title} - Preço: ${p.mzn} MZN. Envia instruções para pagamento (M-Pesa).`);
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`,'_blank');
+    }
+
+    /* Modal flows */
+    function openModal(type){
+      const modal = document.getElementById('modal');
+      const content = document.getElementById('modal-content');
+      const action = document.getElementById('modal-action');
+      modal.classList.add('open'); document.body.style.overflow='hidden';
+      action.onclick = null;
+
+      if(type === 'lead'){
+        content.innerHTML = `<h3>Baixa a amostra grátis</h3><p class=\"muted\">Deixa teu e-mail e recebes a prévia do ebook + planilha modelo.</p><input id=\"lead-email\" class=\"input\" placeholder=\"Teu e-mail...\" type=\"email\"/>`;
+        action.textContent = 'Enviar'; action.onclick = submitLead;
+      }
+
+      if(type === 'purchase-ebook'){
+        const p = PRODUCTS.ebook_intro;
+        content.innerHTML = `<h3>${p.title}</h3><p class=\"muted\">Preço: <strong>${p.mzn} MZN</strong> (≈ R$ ${p.brl})</p><p class=\"muted\">Paga via M-Pesa e envia comprovativo no WhatsApp para concluir a compra. Ou compra internacional via Hotmart.</p><div style=\"margin-top:10px\"><label class=\"muted\">Nome</label><input id=\"buyer-name\" class=\"input\" placeholder=\"Teu nome...\"/></div>`;
+        action.textContent = 'Pagar via WhatsApp'; action.onclick = () => openWhatsApp('ebook_intro');
+      }
+
+      if(type === 'purchase-ebook-basic'){
+        const p = PRODUCTS.ebook_basic;
+        content.innerHTML = `<h3>${p.title}</h3><p class=\"muted\">Preço: <strong>${p.mzn} MZN</strong> (≈ R$ ${p.brl})</p><p class=\"muted\">Paga via M-Pesa e envia comprovativo no WhatsApp para concluir a compra. Ou compra internacional via Hotmart.</p><div style=\"margin-top:10px\"><label class=\"muted\">Nome</label><input id=\"buyer-name\" class=\"input\" placeholder=\"Teu nome...\"/></div>`;
+        action.textContent = 'Pagar via WhatsApp'; action.onclick = () => openWhatsApp('ebook_basic');
+      }
+    }
+
+    function closeModal(){ document.getElementById('modal').classList.remove('open'); document.body.style.overflow=''; }
+
+    async function submitLead(){
+      const email = document.getElementById('lead-email').value; if(!email) return alert('Coloca o teu e-mail');
+      try{
+        // Envia para teu endpoint - placeholder
+        await fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,source:'ebook-preview'})});
+        closeModal(); alert('Obrigado — verifica teu e-mail.');
+      }catch(e){ closeModal(); alert('Erro ao registar. Podes enviar mensagem no WhatsApp.'); }
+    }
+
+    /* Currency toggle */
+    function setCurrency(currency){
+      document.getElementById('btn-mzn').classList.toggle('active', currency==='mzn');
+      document.getElementById('btn-brl').classList.toggle('active', currency==='brl');
+      document.querySelectorAll('.price').forEach(el=>{
+        const mzn = el.dataset.mzn; const brl = el.dataset.brl; el.textContent = currency==='mzn' ? `${mzn} MZN` : `R$ ${brl}`;
+      });
+      // accessibility
+      document.getElementById('btn-mzn').setAttribute('aria-pressed', currency==='mzn');
+      document.getElementById('btn-brl').setAttribute('aria-pressed', currency==='brl');
+    }
+
+    document.getElementById('btn-mzn').addEventListener('click',()=>setCurrency('mzn'));
+    document.getElementById('btn-brl').addEventListener('click',()=>setCurrency('brl'));
+
+    /* Scroll reveal */
+    (function(){
+      const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); }); },{threshold:0.12});
+      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    })();
+
+    /* Copy Hotmart link for affiliates */
+    function copyHotmart(){ navigator.clipboard?.writeText(HOTMART_LINK).then(()=>{ alert('Link Hotmart copiado.'); }); }
+
+    /* Basic analytics placeholder */
+    (function(){ window._analytics = window._analytics || []; _analytics.push(['pageview', location.pathname]); })();
+
+    // Initialize currency display
+    setTimeout(()=>setCurrency('mzn'),200);
+  </script>
+</body>
+</html>
