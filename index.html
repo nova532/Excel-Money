@@ -1,278 +1,798 @@
 <!DOCTYPE html>
 <html lang="pt-MZ">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Domina Academy — Aprende. Cria. Ganha. | Excel & Finanças Digitais</title>
-  <meta name="description" content="Aprende, cria e ganha com a Domina Academy. Cursos, planilhas e ferramentas práticas para dominar Excel e finanças digitais.">
-  <link rel="icon" href="img/favicon.png">
+  <meta name="description" content="Aprende, cria e ganha com a Domina Academy. Cursos, planilhas e ferramentas práticas para dominar Excel e finanças digitais." />
+  <link rel="icon" href="img/favicon.png" />
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- =========================
+       DOMINA ACADEMY ULTRA v3.0
+       HTML FINAL (PARTES 1+2+3 INTEGRADAS)
+       PROJETO: OWNER + STRATEGIST / FOCO: CONVERSÃO
+       ========================= -->
+
   <style>
-    /* ===================== RESET ===================== */
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;scroll-behavior:smooth;}
-    html{scroll-padding-top:100px;}
-    body{background:#0D1117;color:#FFF;line-height:1.7;overflow-x:hidden;}
-    a{text-decoration:none;color:inherit;transition:0.3s;}
-    a:hover{color:#00FFF0;}
-    .container{width:90%;max-width:1400px;margin:0 auto;position:relative;}
+    /* ===================== PART 1 — RESET, VARS, BASE ===================== */
+    :root{
+      --primary-1:#00C896; --primary-2:#00E3A8; --accent:#00FFF0;
+      --bg-1:#0D1117; --bg-2:#0B0F13; --card-bg:rgba(17,25,33,0.85);
+      --glass-1:rgba(255,255,255,0.03); --muted:#A9AEB3; --text:#FFFFFF;
+      --danger:#FF6B6B; --success:#37D67A;
+      --radius-lg:20px; --radius-md:12px; --radius-sm:8px;
+      --container-max:1400px;
+      --t-fast:180ms; --t-med:320ms; --t-slow:560ms;
+      --glow-1:0 8px 30px rgba(0,255,240,0.06);
+      --shadow-1:0 12px 40px rgba(0,200,150,0.12);
+      --shadow-2:0 20px 60px rgba(0,200,150,0.14);
+      --ff-sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --base-size:16px; --line-height:1.65;
+    }
+    *,*::before,*::after{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    html{font-size:var(--base-size);scroll-behavior:smooth;}
+    body{
+      margin:0;font-family:var(--ff-sans);background:
+      radial-gradient(1200px 600px at 20% 10%, rgba(0,255,240,0.03), transparent 20%),
+      var(--bg-1); color:var(--text); line-height:var(--line-height);
+      -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;
+      transition: background var(--t-med), color var(--t-med);
+    }
+    .container{ width: min(92%, var(--container-max)); margin-inline:auto; padding-inline: clamp(1rem, 2.6vw, 2.5rem); position:relative; }
 
-    /* ===================== BOTÕES ===================== */
-    .btn{cursor:pointer;border:none;border-radius:15px;font-weight:800;text-transform:uppercase;padding:1rem 3rem;transition:0.3s;}
-    .btn-primary{background:linear-gradient(135deg,#00C896,#00FFF0);color:#0D1117;box-shadow:0 10px 30px rgba(0,200,150,0.5);}
-    .btn-primary:hover{transform:translateY(-5px) scale(1.05);box-shadow:0 15px 40px rgba(0,255,200,0.6);}
-    .btn-outline{border:2px solid #00C896;color:#00C896;background:transparent;}
-    .btn-outline:hover{background:#00C896;color:#0D1117;}
+    h1,h2,h3,h4,h5{ margin:0 0 .5rem 0; font-weight:800; line-height:1.05; letter-spacing:-0.02em; }
+    h1{ font-size: clamp(1.75rem, 3.8vw, 2.8rem); color:var(--text); }
+    h2{ font-size: clamp(1.4rem, 2.8vw, 2.2rem); color:var(--primary-1); text-transform:uppercase; letter-spacing:1px; }
+    p,li{ color:var(--muted); margin:0 0 .9rem 0; }
 
-    /* ===================== HEADER ===================== */
-    header{position:sticky;top:0;z-index:999;background:rgba(13,17,23,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,255,240,0.1);}
-    .header-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;}
-    .brand{display:flex;align-items:center;gap:1rem;cursor:pointer;}
-    .logo{font-size:2.4rem;font-weight:900;color:#00C896;text-shadow:0 0 20px rgba(0,255,240,0.6);}
-    .brand-text h1{font-size:1.9rem;font-weight:800;color:#fff;}
-    .brand-text .tagline{font-size:0.95rem;color:#CCCCCC;}
-    .main-nav ul{display:flex;gap:2rem;list-style:none;}
-    .main-nav a{position:relative;font-weight:500;}
-    .main-nav a::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:2px;background:#00C896;border-radius:2px;transition:width 0.3s ease;}
-    .main-nav a:hover::after,.main-nav a.active::after{width:100%;}
+    a{ color:inherit; text-decoration:none; transition: color var(--t-fast), transform var(--t-fast); }
+    a:hover,a:focus{ color:var(--accent); transform: translateY(-1px); }
+    :focus{ outline:none; } :focus-visible{ outline:3px solid rgba(0,255,240,0.08); outline-offset:4px; border-radius:6px; }
 
-    /* ===================== HERO ===================== */
-    .hero{padding:6rem 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;background:radial-gradient(circle at right, rgba(0,255,240,0.05), transparent 70%);}
-    .hero-copy{flex:1;min-width:320px;}
-    .hero-copy .badge{display:inline-block;background:linear-gradient(135deg,#00C896,#00FFF0);color:#0D1117;font-weight:700;padding:0.4rem 1rem;border-radius:50px;margin-bottom:1rem;letter-spacing:0.5px;}
-    .hero-copy h2{font-size:3rem;margin-bottom:1rem;line-height:1.2;color:#fff;}
-    .hero-copy .lead{color:#AAAAAA;font-size:1.2rem;max-width:550px;margin-bottom:2rem;}
-    .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;}
-    .hero-stats{display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;}
-    .kpi strong{display:block;font-size:2rem;color:#00C896;}
-    .kpi span{color:#AAA;font-size:0.9rem;}
+    /* Utilities */
+    .u-pt-1{ padding-top:.5rem } .u-pt-2{ padding-top:1rem } .u-pt-3{ padding-top:2rem }
+    .u-pb-1{ padding-bottom:.5rem } .u-pb-2{ padding-bottom:1rem } .u-pb-3{ padding-bottom:2rem }
+    .u-mt-1{ margin-top:.5rem } .u-mt-2{ margin-top:1rem } .u-mt-3{ margin-top:2rem }
+    .d-flex{ display:flex } .d-grid{ display:grid } .flex-column{ display:flex; flex-direction:column }
+    .items-center{ align-items:center } .justify-center{ justify-content:center }
+    .truncate{ overflow:hidden; white-space:nowrap; text-overflow:ellipsis }
+    .glass{ background:var(--card-bg); border: 1px solid var(--glass-1); border-radius:var(--radius-md); box-shadow:var(--glow-1) }
 
-    /* HERO CARD */
-    .hero-aside{flex:1;display:flex;justify-content:center;min-width:320px;}
-    .product-card{background:rgba(17,25,33,0.85);backdrop-filter:blur(10px);border-radius:25px;overflow:hidden;box-shadow:0 10px 40px rgba(0,200,150,0.3);transition:0.4s;}
-    .product-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 15px 50px rgba(0,255,200,0.4);}
-    .product-card img{width:100%;border-bottom:2px solid #00C896;}
-    .card-body{padding:2rem;}
-    .card-body h3{color:#00FFF0;margin-bottom:0.5rem;}
-    .card-body p{color:#AAA;margin-bottom:1rem;}
-    .price-row{display:flex;justify-content:space-between;align-items:center;}
-    .price-row .price{font-size:1.4rem;font-weight:700;color:#00C896;}
+    /* ===================== PART 1 — HEADER & NAV ===================== */
+    header.site-header, header {
+      position: sticky; top:0; z-index:9999;
+      background: linear-gradient(180deg, rgba(8,12,14,0.80), rgba(8,12,14,0.65));
+      backdrop-filter: blur(8px); border-bottom:1px solid rgba(0,255,240,0.06);
+      transition: box-shadow var(--t-med), background var(--t-med), transform var(--t-med);
+    }
+    .header-inner{ display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.9rem 0; }
+    .brand{ display:flex; align-items:center; gap:.85rem; cursor:pointer; user-select:none; }
+    .logo{ font-size:1.9rem; font-weight:900; color:var(--primary-1); text-shadow:0 6px 28px rgba(0,255,240,0.06); transition:transform .18s }
+    .brand:hover .logo{ transform: translateY(-2px) rotate(-1deg) }
+    .brand-text h1{ font-size:1.1rem; margin:0; color:var(--text); font-weight:800 }
+    .brand-text .tagline{ font-size:.83rem; color:var(--muted) }
 
-    /* ===================== SEÇÕES ===================== */
-    section{padding:5rem 0;}
-    h2{text-align:center;color:#00C896;margin-bottom:1rem;}
-    p.lead{text-align:center;color:#AAAAAA;}
+    .main-nav{ display:flex; gap:1.2rem; align-items:center }
+    .main-nav ul{ list-style:none; display:flex; gap:1.2rem; margin:0; padding:0 }
+    .main-nav a{ color:var(--text); font-weight:600; padding:.25rem .15rem; position:relative }
+    .main-nav a::after{ content:''; position:absolute; left:0; bottom:-6px; width:0; height:2px; background: linear-gradient(90deg,var(--primary-1),var(--accent)); transition: width var(--t-fast); border-radius:2px }
+    .main-nav a:hover::after, .main-nav a.active::after { width:100% }
 
-    /* ===================== GRID ===================== */
-    .products-grid,.courses-grid,.features-grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:3rem;}
-    .feature-card,.course-card{background:rgba(17,25,33,0.85);border-radius:20px;padding:2rem;box-shadow:0 10px 40px rgba(0,200,150,0.3);transition:0.4s;}
-    .feature-card:hover,.course-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 15px 50px rgba(0,255,240,0.4);}
-    .feature-card .icon{font-size:2.5rem;margin-bottom:1rem;color:#00C896;}
-    .course-card h3{color:#00FFF0;margin-bottom:0.8rem;}
-    .course-card ul{list-style:none;margin-top:1rem;}
-    .course-card li{margin-bottom:0.5rem;color:#AAAAAA;}
+    .btn{ cursor:pointer; border:none; border-radius:15px; font-weight:800; text-transform:uppercase; padding:1rem 1.45rem; transition: transform .18s, box-shadow .18s; display:inline-flex; align-items:center; gap:.5rem }
+    .btn-primary{ background: linear-gradient(135deg,#00C896,#00FFF0); color:#071015; box-shadow: 0 10px 30px rgba(0,200,150,0.5) }
+    .btn-primary:hover{ transform: translateY(-5px) scale(1.02); box-shadow:0 15px 50px rgba(0,255,200,0.6) }
+    .btn-outline{ border:2px solid #00C896; color:#00C896; background:transparent }
+    .btn-outline:hover{ background:#00C896; color:#071015 }
 
-    /* ===================== FAQ ===================== */
-    .faq-accordion{max-width:700px;margin:3rem auto;}
-    .faq-item{margin-bottom:1rem;background:rgba(17,25,33,0.85);border-radius:15px;overflow:hidden;box-shadow:0 3px 10px rgba(0,255,240,0.1);}
-    .faq-question{width:100%;padding:1rem 1.5rem;background:transparent;color:#00FFF0;border:none;font-weight:600;cursor:pointer;text-align:left;}
-    .faq-answer{max-height:0;overflow:hidden;padding:0 1.5rem;background:#111921;transition:max-height 0.4s ease;}
-    .faq-item.open .faq-answer{padding:1rem 1.5rem;max-height:500px;transition:max-height 0.5s ease;}
+    /* header CTA (prime) */
+    .btn-cta{ display:inline-flex; align-items:center; justify-content:center; gap:.6rem; padding:.7rem 1.2rem; border-radius:14px; font-weight:900; text-transform:uppercase;
+      background: linear-gradient(135deg, var(--primary-1), var(--accent)); color:#071015; border:none; box-shadow: 0 12px 40px rgba(0,200,150,0.18); transition: transform var(--t-fast), box-shadow var(--t-fast) }
+    .btn-cta:hover{ transform: translateY(-4px) scale(1.02); box-shadow: var(--shadow-2) }
 
-    /* ===================== DEPÓIMENTOS ===================== */
-    .testimonials-slider{display:flex;gap:2rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:2rem 0;}
-    .testimonial-card{background:rgba(17,25,33,0.85);border-radius:20px;padding:2rem;flex:0 0 300px;box-shadow:0 10px 40px rgba(0,200,150,0.3);scroll-snap-align:start;transition:0.4s;}
-    .testimonial-card blockquote{font-style:italic;color:#CCC;margin-bottom:1rem;}
+    /* hamburger for mobile */
+    .hamburger{ display:none; width:46px; height:40px; border-radius:10px; align-items:center; justify-content:center; cursor:pointer; background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03) }
+    .hamburger .bar{ width:22px; height:2px; background:var(--muted); border-radius:2px; transition: transform var(--t-fast), opacity var(--t-fast) }
 
-    /* ===================== RODAPÉ ===================== */
-    footer{background:#111921;color:#AAA;padding:3rem 0;text-align:center;}
-    footer a{color:#00C896;}
+    /* ===================== PART 1 — HERO ===================== */
+    .hero{ padding: clamp(2.6rem,6vw,6rem) 0; display:grid; grid-template-columns: 1fr 460px; gap: clamp(1.4rem,3vw,2.6rem); align-items:center; position:relative }
+    @media (max-width:980px){ .hero{ grid-template-columns:1fr; text-align:center; padding: clamp(2rem,6vw,3.6rem) 0 } .hero-aside{ order:-1; margin-bottom:1.2rem } }
 
-    /* RESPONSIVO */
-    @media(max-width:768px){.main-nav ul{flex-direction:column;gap:1rem;}.hero-copy h2{font-size:2rem;}}
+    .hero::before{ content:''; position:absolute; right:-10%; top:-10%; width:60%; height:60%; background: radial-gradient(closest-side, rgba(0,255,240,0.06), transparent 40%); filter: blur(40px); pointer-events:none; z-index:0 }
+    .hero-copy{ position:relative; z-index:5; max-width:66ch }
+    .hero .badge{ display:inline-block; padding:.45rem .95rem; border-radius:999px; font-weight:800; font-size:.85rem; background: linear-gradient(90deg,var(--primary-1),var(--accent)); color:#071015; margin-bottom:.9rem; box-shadow: 0 10px 40px rgba(0,200,150,0.08) }
+    .hero-copy h2{ font-size: clamp(2rem,4.6vw,3.2rem); margin-bottom:.8rem; color:#FFF; line-height:1.05 }
+    .hero-copy .lead{ color:var(--muted); font-size:1.05rem; margin-bottom:1.25rem }
+
+    .hero-actions{ display:flex; gap:.9rem; align-items:center; flex-wrap:wrap; margin-bottom:.9rem }
+    .hero-actions .btn-primary{ padding:.85rem 1.6rem; border-radius:14px; font-weight:800 }
+    .hero-actions .btn-outline{ display:inline-flex; align-items:center; gap:.5rem; padding:.7rem 1.2rem; border-radius:12px; border:2px solid rgba(0,200,150,0.12); color:var(--primary-1); background:transparent }
+
+    .hero-stats{ display:flex; gap:1.25rem; margin-top:1.25rem; flex-wrap:wrap; align-items:center }
+    .kpi{ display:flex; flex-direction:column; align-items:flex-start; gap:.15rem }
+    .kpi strong{ font-size:1.6rem; color:var(--primary-1) } .kpi span{ font-size:.9rem; color:var(--muted) }
+
+    .hero-aside{ display:flex; justify-content:center; align-items:center; z-index:3 }
+    .product-card{ width:100%; max-width:420px; border-radius:var(--radius-lg); overflow:hidden; background: linear-gradient(180deg, rgba(17,25,33,0.92), rgba(8,10,12,0.88)); border:1px solid rgba(255,255,255,0.03); box-shadow:var(--shadow-2); transform-style:preserve-3d; transition: transform var(--t-med), box-shadow var(--t-med); position:relative }
+    .product-card img{ width:100%; height:220px; object-fit:cover; display:block; border-bottom:2px solid rgba(0,255,240,0.06) }
+    .card-body{ padding:1.4rem 1.6rem }
+    .card-body h3{ color:var(--accent); margin-bottom:.4rem; font-size:1.2rem }
+    .card-body p{ color:var(--muted); margin-bottom:1rem }
+    .price-row{ display:flex; align-items:center; justify-content:space-between; gap:1rem }
+    .price{ font-size:1.35rem; font-weight:900; color:var(--primary-1) }
+    .product-card .tag{ position:absolute; left:16px; top:16px; padding:.35rem .6rem; border-radius:999px; background: linear-gradient(90deg, rgba(0,200,150,0.12), rgba(0,255,240,0.06)); color:var(--primary-1); font-weight:800; font-size:.8rem; box-shadow:0 8px 30px rgba(0,255,240,0.04) }
+
+    .product-card:hover{ transform: translateY(-10px) rotateZ(-0.8deg) scale(1.01); box-shadow: 0 40px 120px rgba(0,200,150,0.12); border:1px solid rgba(0,255,240,0.06) }
+
+    /* ===================== PART 1 — SECTIONS & GRIDS ===================== */
+    section{ padding: clamp(2rem,5.2vw,4.8rem) 0; position:relative }
+    .section-head{ text-align:center; margin-bottom:1.6rem } .section-head h2{ margin-bottom:.45rem }
+    .products-grid, .features-grid, .courses-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: clamp(1rem,2.6vw,2rem); margin-top:1.6rem }
+    .feature-card, .course-card, .testimonial-card{ background: linear-gradient(180deg, rgba(17,25,33,0.88), rgba(8,10,12,0.86)); border-radius:var(--radius-md); padding:1.25rem; border:1px solid rgba(255,255,255,0.03); box-shadow:var(--shadow-1); transition: transform var(--t-med), box-shadow var(--t-med) }
+    .feature-card:hover, .course-card:hover, .testimonial-card:hover { transform: translateY(-8px); box-shadow:var(--shadow-2) }
+    .feature-card .icon{ font-size:2.25rem; margin-bottom:.6rem; color:var(--primary-2) }
+    .feature-card h3, .course-card h3{ margin:0 0 .5rem 0; color:var(--accent); font-size:1.1rem }
+
+    /* ===================== PART 1 — FAQ & TESTIMONIALS ===================== */
+    .faq-accordion{ max-width:980px; margin-inline:auto }
+    .faq-item{ background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); border-radius:14px; margin-bottom:.85rem; border:1px solid rgba(255,255,255,0.02); overflow:hidden; transition: box-shadow var(--t-med), transform var(--t-med) }
+    .faq-item.open{ box-shadow:0 20px 60px rgba(0,255,240,0.06); transform:translateY(-6px) }
+    .faq-question{ display:flex; align-items:center; justify-content:space-between; gap:1rem; width:100%; padding:1rem 1.25rem; background:transparent; border:none; cursor:pointer; color:var(--accent); font-weight:700; text-align:left }
+    .faq-question .chev{ transition: transform var(--t-med) }
+    .faq-item.open .faq-question .chev{ transform: rotate(180deg) }
+    .faq-answer{ max-height:0; overflow:hidden; padding:0 1.25rem; color:var(--muted); transition: max-height .45s cubic-bezier(.2,.9,.3,1), padding .25s ease }
+    .faq-item.open .faq-answer{ padding:1rem 1.25rem; max-height:480px; }
+
+    .testimonials-slider{ display:flex; gap:1.2rem; overflow-x:auto; padding:1.25rem 0; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch }
+    .testimonial-card{ flex:0 0 320px; scroll-snap-align:start; display:flex; flex-direction:column; gap:1rem; padding:1.25rem; border-radius:14px; min-height:160px }
+    .testimonial-card blockquote{ font-style:italic; color:#d9eae7; margin:0 }
+
+    /* ===================== PART 2 — OFFCANVAS, DROPDOWN, MEGA-MENU ===================== */
+    .dropdown{ position:relative; display:inline-block }
+    .dropdown-toggle{ cursor:pointer; display:inline-flex; align-items:center; gap:.5rem; padding:.45rem .6rem; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.03) }
+    .dropdown-menu{ position:absolute; top:calc(100% + 8px); left:0; min-width:220px; background: linear-gradient(180deg, rgba(17,25,33,0.96), rgba(8,10,12,0.94)); border-radius:12px; padding:.6rem; box-shadow: 0 18px 60px rgba(0,0,0,0.6); display:none; z-index:1000; border:1px solid rgba(0,255,240,0.06) }
+    .dropdown.open .dropdown-menu{ display:block; animation: dropdown-in var(--t-fast) ease }
+    @keyframes dropdown-in{ from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+    .dropdown-menu a{ display:block; padding:.6rem .8rem; border-radius:8px; color:var(--muted) }
+    .dropdown-menu a:hover{ background: rgba(255,255,255,0.02); color:var(--accent) }
+
+    .mega{ position:absolute; left:50%; transform:translateX(-50%); top:calc(100% + 8px); width:min(1000px,90vw); padding:1rem; background: linear-gradient(180deg, rgba(17,25,33,0.95), rgba(8,10,12,0.94)); border-radius:14px; display:none; box-shadow: 0 30px 120px rgba(0,0,0,0.6); border:1px solid rgba(0,255,240,0.06) }
+    .nav-item.mega-open .mega{ display:block }
+
+    .offcanvas{ position:fixed; inset:0 0 0 auto; right:-120%; width:min(420px,92vw); max-width:420px; height:100vh; z-index:99999; background: linear-gradient(180deg, rgba(10,10,12,0.98), rgba(8,8,10,0.98)); padding:1rem; box-shadow: 0 50px 150px rgba(0,0,0,0.7); transition:right var(--t-med) ease }
+    .offcanvas.open{ right:0 }
+    .offcanvas .close-btn{ display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03) }
+    .offcanvas nav ul{ list-style:none; padding:0; margin:1rem 0 0 0; display:grid; gap:.6rem }
+    .offcanvas nav a{ padding:.85rem 1rem; display:block; border-radius:10px; color:var(--text); background:transparent; font-weight:700 }
+    .offcanvas nav a:hover{ background: rgba(255,255,255,0.02); color:var(--accent) }
+    .offcanvas-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:99999; opacity:0; pointer-events:none; transition: opacity var(--t-med) }
+    .offcanvas.open + .offcanvas-overlay{ opacity:1; pointer-events:auto }
+
+    /* ===================== PART 2 — MODAL & THEME TOGGLE ===================== */
+    .modal-backdrop{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:999999; background:rgba(0,0,0,0.6); opacity:0; pointer-events:none; transition: opacity var(--t-fast) }
+    .modal-backdrop.open{ opacity:1; pointer-events:auto }
+    .modal-window{ width:min(92%,860px); max-height:90vh; background: linear-gradient(180deg, rgba(17,25,33,0.96), rgba(8,10,12,0.94)); border-radius:16px; overflow:auto; box-shadow: 0 40px 140px rgba(0,0,0,0.65); border:1px solid rgba(0,255,240,0.06); transform: translateY(12px); transition: transform var(--t-med); padding:1.25rem }
+    .modal-backdrop.open .modal-window{ transform: translateY(0) }
+
+    .theme-toggle{ display:inline-flex; align-items:center; gap:.5rem; cursor:pointer; padding:.35rem .6rem; border-radius:999px; border:1px solid rgba(255,255,255,0.03); background:transparent }
+    .theme-toggle .dot{ width:18px; height:18px; border-radius:50%; background:linear-gradient(90deg,var(--primary-1),var(--accent)); transition: transform var(--t-fast) }
+    body.light-mode .theme-toggle .dot{ transform: translateX(10px); background:linear-gradient(90deg,#ffd36b,#ff8a00) }
+
+    /* sticky CTA */
+    .sticky-cta{ position:fixed; right:1.25rem; bottom:1.25rem; z-index:100000; display:flex; align-items:center; gap:.6rem; background: linear-gradient(135deg, var(--primary-1), var(--accent)); color:#071015; padding:.6rem .9rem; border-radius:14px; box-shadow: 0 22px 90px rgba(0,255,240,0.08); transform: translateY(10px); opacity:0; transition: transform var(--t-fast), opacity var(--t-fast) }
+    .sticky-cta.show{ transform: translateY(0); opacity:1 }
+    .cta-badge{ background:rgba(255,255,255,0.08); padding:.25rem .45rem; border-radius:999px; font-weight:900; font-size:.85rem }
+
+    /* parallax */
+    .parallax{ position:relative; overflow:hidden; isolation:isolate; background: linear-gradient(180deg, rgba(0,0,0,0.12), transparent) }
+    .parallax .parallax-layer{ position:absolute; inset:0; background-position:center center; background-repeat:no-repeat; background-size:cover; transform: translateY(var(--parallax-y,0px)); transition: transform .2s linear; pointer-events:none }
+
+    /* particles */
+    .particles-canvas{ position:absolute; inset:0; pointer-events:none; z-index:0; opacity:.38; filter: blur(0.6px) }
+
+    /* carousel */
+    .carousel-wrap{ position:relative; overflow:hidden; border-radius:12px }
+    .carousel-track{ display:flex; transition: transform .45s cubic-bezier(.22,.97,.36,1); gap:1rem; padding:1rem 0 }
+    .carousel-card{ min-width:260px; background: linear-gradient(180deg, rgba(17,25,33,0.88), rgba(8,10,12,0.86)); padding:1rem; border-radius:12px; box-shadow:var(--shadow-1) }
+    .carousel-arrow{ position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.03); cursor:pointer; border:1px solid rgba(255,255,255,0.03) }
+    .carousel-arrow.left{ left:8px } .carousel-arrow.right{ right:8px }
+
+    /* tooltip */
+    [data-tooltip]{ position:relative }
+    [data-tooltip]::after{ content: attr(data-tooltip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%) translateY(6px); background:#071015; color:var(--text); padding:.45rem .6rem; border-radius:8px; font-size:.8rem; white-space:nowrap; opacity:0; pointer-events:none; transition: opacity var(--t-fast), transform var(--t-fast) }
+    [data-tooltip].tooltip-visible::after{ opacity:1; transform:translateX(-50%) translateY(0) }
+
+    /* skeleton */
+    .skeleton{ background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.02) 100%); background-size:200% 100%; animation: shimmer 1.6s linear infinite; border-radius:10px }
+    .skeleton.h-12{ height:12px } .skeleton.h-20{ height:20px } .skeleton.avatar{ width:48px; height:48px; border-radius:50% }
+    @keyframes shimmer{ from{ background-position:200% 0 } to{ background-position:-200% 0 } }
+
+    /* pricing */
+    .pricing{ display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:1.1rem; margin-top:1.5rem }
+    .plan{ padding:1.25rem; border-radius:var(--radius-md); background: linear-gradient(180deg, rgba(17,25,33,0.88), rgba(8,10,12,0.86)); border:1px solid rgba(255,255,255,0.03); box-shadow:var(--shadow-1); transition: transform var(--t-med) }
+    .plan.featured{ border:1px solid rgba(0,255,240,0.08); transform:translateY(-8px); box-shadow:0 30px 120px rgba(0,255,240,0.06) }
+    .plan h3{ color:var(--accent); margin-bottom:.4rem } .price-big{ font-size:1.6rem; font-weight:900; color:var(--primary-1) }
+    .plan .benefits{ color:var(--muted); margin-top:.6rem }
+    .plan .buy-strip{ display:flex; gap:.6rem; align-items:center; justify-content:space-between; margin-top:1rem }
+
+    /* accessibility reductions */
+    @media (prefers-reduced-motion: reduce){ *{ animation-duration:1ms !important; animation-iteration-count:1 !important; transition-duration:1ms !important; scroll-behavior:auto !important } }
+
+    /* responsive */
+    @media (min-width:1201px){ .container{ padding-inline:2.8rem } }
+    @media (max-width:1200px) and (min-width:881px){ .hero{ grid-template-columns:1fr 380px } .brand .logo{ font-size:1.7rem } .product-card img{ height:200px } }
+    @media (max-width:880px){
+      header{ padding:.55rem 0 } .brand-text h1{ font-size:1rem } .hero{ grid-template-columns:1fr; gap:1rem; padding: clamp(1.4rem,6vw,2.6rem) 0 }
+      .hero .badge{ margin-left:auto; margin-right:auto } .product-card{ max-width:96%; margin-inline:auto } .hero-stats{ justify-content:center } .testimonials-slider{ padding:.75rem 0; gap:.9rem } .hamburger{ display:flex } .main-nav{ display:none !important } .btn-cta{ padding:.6rem .9rem; font-size:.95rem }
+    }
+    @media (max-width:420px){ .hero-copy h2{ font-size:1.55rem } .hero-copy .lead{ font-size:.95rem } .product-card img{ height:150px } .product-card .tag{ left:12px; top:12px; padding:.25rem .45rem } }
+
+    /* ===================== PART 3 — FINAL POLISH (LOADER, REVEAL, CTA ANIMATIONS) ===================== */
+    .loader-overlay{ position:fixed; inset:0; background: radial-gradient(circle at 50% 50%, #0c0e10 0%, #010203 100%); display:flex; align-items:center; justify-content:center; z-index:9999999; opacity:1; transition:opacity .8s ease }
+    .loader-logo{ font-size:2rem; font-weight:900; letter-spacing:1px; color:var(--accent); text-shadow:0 0 18px rgba(0,255,240,0.6); animation: loaderPulse 1.2s infinite alternate }
+    @keyframes loaderPulse{ from{ opacity:0.3; transform:scale(0.96) } to{ opacity:1; transform:scale(1.04) } }
+    .loader-overlay.hidden{ opacity:0; pointer-events:none }
+
+    .reveal{ opacity:0; transform:translateY(40px); transition: all .8s cubic-bezier(.17,.67,.83,.67) }
+    .reveal.visible{ opacity:1; transform:translateY(0) }
+
+    .trust-badge{ display:inline-flex; align-items:center; gap:.4rem; font-weight:700; color:var(--accent); font-size:.9rem; border:1px solid rgba(0,255,240,0.06); padding:.35rem .7rem; border-radius:999px; background:rgba(255,255,255,0.03); box-shadow:0 0 12px rgba(0,255,240,0.05); backdrop-filter:blur(6px) }
+    .btn-buy{ position:relative; overflow:hidden; animation: pulseCta 3s infinite cubic-bezier(.66,0,.34,1) }
+    @keyframes pulseCta{ 0%,100%{ box-shadow:0 0 0 0 rgba(0,255,240,0.3) } 50%{ box-shadow:0 0 0 8px rgba(0,255,240,0) } }
+    .btn-buy::after{ content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(120deg, transparent, rgba(255,255,255,0.08), transparent); transition:left .7s ease }
+    .btn-buy:hover::after{ left:100% }
+
+    /* brand-scan */
+    .brand-scan{ position:relative; overflow:hidden; display:inline-block }
+    .brand-scan::after{ content:''; position:absolute; inset:0; background:linear-gradient(120deg, transparent 40%, rgba(0,255,240,0.3) 50%, transparent 60%); animation: scan 3s infinite linear }
+    @keyframes scan{ from{ transform:translateX(-100%) } to{ transform:translateX(100%) } }
+
+    /* small helpers */
+    .u-center{ display:flex; align-items:center; justify-content:center } .u-gap-sm{ gap:.5rem } .u-gap-md{ gap:1rem } .u-gap-lg{ gap:2rem }
+    .u-fade-in{ animation: fadeIn 1s ease forwards } @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+    .u-rotate-hover:hover{ transform:rotate(2deg) } .u-hover-rise:hover{ transform:translateY(-4px) } .u-glow:hover{ box-shadow:0 0 30px rgba(0,255,240,0.15) }
+
+    /* scrollbar */
+    ::-webkit-scrollbar{ width:10px } ::-webkit-scrollbar-thumb{ background:linear-gradient(180deg,var(--primary-1),var(--accent)); border-radius:999px } ::-webkit-scrollbar-track{ background:var(--bg-2) }
   </style>
 </head>
 
 <body>
+  <!-- LOADER (will be removed by script) -->
+  <!-- Added by script as well, but kept for progressive enhancement -->
+  <div class="loader-overlay" id="initial-loader" aria-hidden="true">
+    <div class="loader-logo brand-scan">DOMINA ACADEMY</div>
+  </div>
+
   <!-- HEADER -->
-  <header>
+  <header class="site-header" role="banner">
     <div class="container header-inner">
-      <div class="brand">
+      <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
         <div class="logo">Domina</div>
         <div class="brand-text">
           <h1>Academy</h1>
           <span class="tagline">Aprende. Cria. Ganha.</span>
         </div>
       </div>
-      <nav class="main-nav">
+
+      <!-- main nav (desktop) -->
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
         <ul>
           <li><a href="#produtos">Loja</a></li>
-          <li><a href="#cursos">Cursos</a></li>
-          <li><a href="#vip">VIP</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li class="nav-item"><a href="#cursos">Cursos</a></li>
+          <li class="nav-item"><a href="#vip">VIP</a></li>
+          <li class="nav-item"><a href="#faq">FAQ</a></li>
+          <li class="nav-item dropdown" style="position:relative">
+            <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Mais ▾</button>
+            <div class="dropdown-menu" role="menu" aria-hidden="true">
+              <a href="#depoimentos">Depoimentos</a>
+              <a href="#contato">Contato</a>
+              <a href="#sobre">Sobre</a>
+            </div>
+          </li>
         </ul>
       </nav>
-      <a href="#vip" class="btn btn-primary">Quero Acessar Agora →</a>
+
+      <div style="display:flex;align-items:center;gap:.6rem">
+        <button class="theme-toggle" aria-pressed="false" aria-label="Alternar tema">
+          <span class="dot" aria-hidden="true"></span>
+        </button>
+
+        <!-- CTA prime -->
+        <a href="https://dominaacademy.com/checkout" class="btn btn-cta btn-buy" id="header-buy">Quero Acessar Agora →</a>
+
+        <!-- Hamburger for mobile -->
+        <button class="hamburger" aria-label="Abrir menu">
+          <span class="bar"></span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero container">
-    <div class="hero-copy">
-      <span class="badge">Domina Excel</span>
-      <h2>Aprende, Cria e Ganha 💼</h2>
-      <p class="lead">Domina planilhas, finanças e ferramentas digitais para aumentar sua renda de forma prática e eficiente.</p>
-      <div class="hero-actions">
-        <a href="#vip" class="btn btn-primary">Quero Acessar Agora →</a>
-        <a href="#produtos" class="btn btn-outline">Ver Produtos</a>
-      </div>
-      <div class="hero-stats">
-        <div class="kpi"><strong>+5000</strong><span>Alunos</span></div>
-        <div class="kpi"><strong>+200</strong><span>Planilhas</span></div>
-        <div class="kpi"><strong>+50</strong><span>Cursos</span></div>
-      </div>
+  <!-- OFFCANVAS (mobile) -->
+  <div class="offcanvas" aria-hidden="true">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-weight:800;color:var(--accent)">Menu</div>
+      <button class="close-btn" aria-label="Fechar menu">✕</button>
     </div>
-    <div class="hero-aside">
-      <div class="product-card">
-        <img src="https://via.placeholder.com/400x250.png?text=Produto+Premium" alt="Produto Premium">
-        <div class="card-body">
-          <h3>Template Premium</h3>
-          <p>Organize suas finanças de forma profissional com nosso template exclusivo.</p>
-          <div class="price-row">
-            <span class="price">R$197</span>
-            <a href="#vip" class="btn btn-primary">Comprar</a>
+    <nav>
+      <ul>
+        <li><a href="#produtos">Loja</a></li>
+        <li><a href="#cursos">Cursos</a></li>
+        <li><a href="#vip">VIP</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="offcanvas-overlay" style="display:none"></div>
+
+  <!-- STICKY CTA (shown when hero out of view) -->
+  <a href="#vip" class="sticky-cta" aria-label="Entrar VIP">
+    <span class="cta-badge">Hot</span>
+    <strong>Entrar na Lista VIP →</strong>
+  </a>
+
+  <!-- PARTICLES CANVAS (script will create a canvas, fallback placeholder) -->
+  <div aria-hidden="true" class="particles-placeholder" style="position:absolute;inset:0;pointer-events:none;z-index:0"></div>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero container reveal" id="hero">
+      <div class="hero-copy">
+        <span class="badge">Domina Excel</span>
+        <h2>Aprende, Cria e Ganha 💼</h2>
+        <p class="lead">Domina planilhas, finanças e ferramentas digitais para aumentar sua renda de forma prática e eficiente. Material prático, templates, automações e suporte VIP.</p>
+
+        <div class="hero-actions" role="group" aria-label="Ações principais">
+          <a href="https://dominaacademy.com/checkout" class="btn btn-primary btn-buy" data-tooltip="Últimas vagas!">Quero Acessar Agora →</a>
+          <a href="#produtos" class="btn btn-outline">Ver Produtos</a>
+        </div>
+
+        <div class="hero-stats" aria-hidden="true">
+          <div class="kpi"><strong>+5000</strong><span>Alunos</span></div>
+          <div class="kpi"><strong>+200</strong><span>Planilhas</span></div>
+          <div class="kpi"><strong>+50</strong><span>Cursos</span></div>
+        </div>
+
+        <div class="u-mt-2">
+          <small class="text-muted">Garantia de 7 dias — satisfeito ou seu dinheiro de volta.</small>
+        </div>
+      </div>
+
+      <aside class="hero-aside">
+        <article class="product-card reveal">
+          <div class="tag">Oferta</div>
+          <img src="https://via.placeholder.com/720x380.png?text=Template+Premium" alt="Template Premium">
+          <div class="card-body">
+            <h3>Template Premium</h3>
+            <p>Organize suas finanças de forma profissional com nosso template exclusivo, fórmulas avançadas e dashboard automatizado.</p>
+            <div class="price-row">
+              <span class="price animate">R$197</span>
+              <a href="https://dominaacademy.com/checkout" class="btn btn-primary btn-buy">Comprar</a>
+            </div>
+          </div>
+        </article>
+      </aside>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="produtos" class="container reveal">
+      <div class="section-head">
+        <h2>Nossos Produtos</h2>
+        <p class="lead">Ferramentas e planilhas criadas para acelerar seus resultados.</p>
+      </div>
+
+      <div class="products-grid">
+        <div class="feature-card clickable reveal">
+          <div class="icon">📊</div>
+          <h3>Planilha Financeira</h3>
+          <p>Controle completo do seu orçamento pessoal e profissional, com relatórios e gráficos prontos.</p>
+          <a href="https://dominaacademy.com/checkout" class="btn btn-primary btn-buy">Comprar</a>
+        </div>
+
+        <div class="feature-card clickable reveal">
+          <div class="icon">🗂️</div>
+          <h3>Gestão de Projetos</h3>
+          <p>Organize tarefas, prazos e metas com um sistema simples e reutilizável.</p>
+          <a href="https://dominaacademy.com/checkout" class="btn btn-primary btn-buy">Comprar</a>
+        </div>
+
+        <div class="feature-card clickable reveal">
+          <div class="icon">💹</div>
+          <h3>Investimentos</h3>
+          <p>Planilhas prontas para acompanhar e analisar seus investimentos com facilidade.</p>
+          <a href="https://dominaacademy.com/checkout" class="btn btn-primary btn-buy">Comprar</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COURSES -->
+    <section id="cursos" class="container reveal">
+      <div class="section-head">
+        <h2>Cursos em Destaque</h2>
+        <p class="lead">Aprenda na prática com nossos cursos passo a passo.</p>
+      </div>
+
+      <div class="courses-grid">
+        <div class="course-card reveal">
+          <h3>Excel Avançado</h3>
+          <ul>
+            <li>Macros e automações</li>
+            <li>Dashboards profissionais</li>
+            <li>Projetos reais</li>
+          </ul>
+          <a href="https://dominaacademy.com/checkout" class="btn btn-primary btn-buy">Inscrever-se</a>
+        </div>
+
+        <div class="course-card reveal plan featured">
+          <h3>Finanças Digitais — VIP</h3>
+          <div class="price-big">Assinatura</div>
+          <div class="benefits">Acesso completo, atualizações e suporte prioritário.</div>
+          <div class="buy-strip">
+            <a href="https://dominaacademy.com/checkout" class="btn btn-primary btn-buy">Entrar Agora</a>
+            <span class="trust-badge">Garantia</span>
+          </div>
+        </div>
+
+        <div class="course-card reveal">
+          <h3>Automação de Negócios</h3>
+          <ul>
+            <li>Templates prontos</li>
+            <li>Integrações com ferramentas</li>
+            <li>Resultados rápidos</li>
+          </ul>
+          <a href="https://dominaacademy.com/checkout" class="btn btn-primary btn-buy">Inscrever-se</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING / VIP -->
+    <section id="vip" class="container reveal parallax" data-parallax-speed="0.12" style="padding-top:2rem;">
+      <div class="section-head">
+        <h2>Seja VIP</h2>
+        <p class="lead">Acesse conteúdos exclusivos, descontos e suporte prioritário.</p>
+      </div>
+
+      <div class="pricing">
+        <div class="plan reveal">
+          <h3>Básico</h3>
+          <div class="price-big">R$47</div>
+          <div class="benefits">Acesso a 10 templates + comunidade.</div>
+          <div class="buy-strip">
+            <a href="https://dominaacademy.com/checkout" class="btn btn-outline btn-buy">Comprar</a>
+            <span class="trust-badge">Seguro</span>
+          </div>
+        </div>
+
+        <div class="plan featured reveal">
+          <h3>Pro — Mais Vendido</h3>
+          <div class="price-big">R$197</div>
+          <div class="benefits">Todos os templates + cursos + suporte VIP.</div>
+          <div class="buy-strip">
+            <a href="https://dominaacademy.com/checkout" class="btn btn-primary btn-buy">Assinar</a>
+            <span class="trust-badge">Garantido</span>
+          </div>
+        </div>
+
+        <div class="plan reveal">
+          <h3>Empresarial</h3>
+          <div class="price-big">Sob Consulta</div>
+          <div class="benefits">Soluções personalizadas para equipes.</div>
+          <div class="buy-strip">
+            <a href="#contato" class="btn btn-outline">Solicitar</a>
+            <span class="trust-badge">Enterprise</span>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- LOJA / PRODUTOS -->
-  <section id="produtos" class="container">
-    <h2>Nossos Produtos</h2>
-    <p class="lead">Ferramentas e planilhas criadas para acelerar seus resultados.</p>
-    <div class="products-grid">
-      <div class="feature-card">
-        <div class="icon">📊</div>
-        <h3>Planilha Financeira</h3>
-        <p>Controle completo do seu orçamento pessoal e profissional.</p>
-        <a href="#vip" class="btn btn-primary">Comprar</a>
+    <!-- TESTIMONIALS -->
+    <section id="depoimentos" class="container reveal">
+      <div class="section-head">
+        <h2>O que dizem nossos alunos</h2>
+        <p class="lead">Histórias reais de transformação.</p>
       </div>
-      <div class="feature-card">
-        <div class="icon">🗂️</div>
-        <h3>Gestão de Projetos</h3>
-        <p>Organize tarefas, prazos e metas com eficiência máxima.</p>
-        <a href="#vip" class="btn btn-primary">Comprar</a>
-      </div>
-      <div class="feature-card">
-        <div class="icon">💹</div>
-        <h3>Investimentos</h3>
-        <p>Planilhas prontas para acompanhar e analisar seus investimentos.</p>
-        <a href="#vip" class="btn btn-primary">Comprar</a>
-      </div>
-    </div>
-  </section>
 
-  <!-- CURSOS -->
-  <section id="cursos" class="container">
-    <h2>Cursos em Destaque</h2>
-    <p class="lead">Aprenda na prática com nossos cursos passo a passo.</p>
-    <div class="courses-grid">
-      <div class="course-card">
-        <h3>Excel Avançado</h3>
-        <ul>
-          <li>Macros e automações</li>
-          <li>Dashboards profissionais</li>
-          <li>Projetos reais</li>
-        </ul>
-        <a href="#vip" class="btn btn-primary">Inscrever-se</a>
-      </div>
-      <div class="course-card">
-        <h3>Finanças Digitais</h3>
-        <ul>
-          <li>Planejamento financeiro</li>
-          <li>Controle de investimentos</li>
-          <li>Fluxo de caixa automatizado</li>
-        </ul>
-        <a href="#vip" class="btn btn-primary">Inscrever-se</a>
-      </div>
-      <div class="course-card">
-        <h3>Automação de Negócios</h3>
-        <ul>
-          <li>Templates prontos</li>
-          <li>Integrações com ferramentas</li>
-          <li>Resultados rápidos</li>
-        </ul>
-        <a href="#vip" class="btn btn-primary">Inscrever-se</a>
-      </div>
-    </div>
-  </section>
+      <div class="testimonials-slider">
+        <div class="testimonial-card reveal">
+          <blockquote>“Aprendi mais em 1 mês do que em anos sozinho. Recomendo demais!”</blockquote>
+          <strong>– João M.</strong>
+        </div>
 
-  <!-- LISTA VIP -->
-  <section id="vip" class="container">
-    <h2>Seja VIP</h2>
-    <p class="lead">Acesse conteúdos exclusivos, descontos e suporte prioritário.</p>
-    <div style="display:flex;justify-content:center;margin-top:2rem;">
-      <a href="#" class="btn btn-primary btn-lg">Entrar na Lista VIP →</a>
-    </div>
-  </section>
+        <div class="testimonial-card reveal">
+          <blockquote>“As planilhas e cursos são de altíssimo nível. Transformador!”</blockquote>
+          <strong>– Maria S.</strong>
+        </div>
 
-  <!-- DEPÓIMENTOS -->
-  <section class="container">
-    <h2>O que dizem nossos alunos</h2>
-    <p class="lead">Histórias reais de quem já transformou sua rotina com a Domina Academy.</p>
-    <div class="testimonials-slider">
-      <div class="testimonial-card">
-        <blockquote>“Aprendi mais em 1 mês do que em anos sozinho. Recomendo demais!”</blockquote>
-        <strong>– João M.</strong>
+        <div class="testimonial-card reveal">
+          <blockquote>“O suporte VIP fez toda diferença para meus resultados.”</blockquote>
+          <strong>– Pedro L.</strong>
+        </div>
       </div>
-      <div class="testimonial-card">
-        <blockquote>“As planilhas e cursos são de altíssimo nível. Transformador!”</blockquote>
-        <strong>– Maria S.</strong>
-      </div>
-      <div class="testimonial-card">
-        <blockquote>“O suporte VIP fez toda diferença para meus resultados.”</blockquote>
-        <strong>– Pedro L.</strong>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FAQ -->
-  <section id="faq" class="container">
-    <h2>Perguntas Frequentes</h2>
-    <div class="faq-accordion">
-      <div class="faq-item">
-        <button class="faq-question">Como acesso os cursos?</button>
-        <div class="faq-answer"><p>Após a compra, você recebe acesso imediato à plataforma online.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Os produtos funcionam em qualquer computador?</button>
-        <div class="faq-answer"><p>Sim! Nossas planilhas são compatíveis com Excel e Google Sheets.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Posso receber suporte VIP?</button>
-        <div class="faq-answer"><p>Sim! Usuários VIP têm atendimento prioritário e materiais exclusivos.</p></div>
-      </div>
-    </div>
-  </section>
+    <!-- FAQ -->
+    <section id="faq" class="container reveal">
+      <div class="section-head"><h2>Perguntas Frequentes</h2></div>
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <button class="faq-question">Como acesso os cursos?<span class="chev">▾</span></button>
+          <div class="faq-answer"><p>Após a compra, você recebe acesso imediato à plataforma online por e-mail.</p></div>
+        </div>
 
-  <!-- RODAPÉ -->
-  <footer>
-    <p>© 2025 Domina Academy. Todos os direitos reservados.</p>
-    <p>Siga-nos nas redes sociais: 
-      <a href="#">Instagram</a> | <a href="#">YouTube</a> | <a href="#">WhatsApp</a>
-    </p>
-  </footer>
+        <div class="faq-item">
+          <button class="faq-question">Os produtos funcionam em qualquer computador?<span class="chev">▾</span></button>
+          <div class="faq-answer"><p>Sim! Nossas planilhas são compatíveis com Excel e Google Sheets.</p></div>
+        </div>
 
-  <!-- ===================== SCRIPTS ===================== -->
+        <div class="faq-item">
+          <button class="faq-question">Posso receber suporte VIP?<span class="chev">▾</span></button>
+          <div class="faq-answer"><p>Sim! Usuários VIP têm atendimento prioritário e materiais exclusivos.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="container reveal">
+      <div class="newsletter glass" style="padding:1.6rem; display:flex; flex-direction:column; align-items:center;">
+        <h3 class="u-mb-1">Receba novidades e descontos</h3>
+        <p class="text-muted">Aproveite cupons exclusivos e conteúdos semanais.</p>
+        <form class="form-inline" style="margin-top:1rem; width:min(720px,100%);" id="newsletter-form">
+          <input type="email" class="input input-news" placeholder="Seu melhor e-mail" required aria-label="Seu melhor e-mail">
+          <button type="submit" class="btn btn-primary">Quero</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="container" style="display:flex;flex-direction:column;gap:.8rem;align-items:center;">
+        <p style="color:var(--muted)">© <span id="yr"></span> Domina Academy. Todos os direitos reservados.</p>
+        <p style="color:var(--muted)">Siga-nos: <a href="#" aria-label="Instagram">Instagram</a> | <a href="#" aria-label="YouTube">YouTube</a> | <a href="#" aria-label="WhatsApp">WhatsApp</a></p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- GLOBAL MODAL (script creates one too) -->
+  <!-- Offcanvas overlay already present -->
+
+  <!-- ===================== SCRIPTS (Partes 2+3 integradas) ===================== -->
   <script>
-    // FAQ Accordion
-    document.querySelectorAll('.faq-question').forEach(button => {
-      button.addEventListener('click', () => {
-        const item = button.parentElement;
-        item.classList.toggle('open');
+  /* ==========================================================================
+     DOMINA ACADEMY — INTEGRATED SCRIPTS (PARTES 2 + 3)
+     - Offcanvas, Dropdowns, Modal, Theme Toggle, Sticky CTA,
+     - Particles (canvas), Parallax, Carousel, Tooltips, Forms, Loader, Reveal
+     - Analytics tracking via console (replace with GA/dataLayer)
+     ========================================================================== */
+  (function(){
+    'use strict';
+
+    // Helpers
+    const $ = (s, c=document) => c.querySelector(s);
+    const $$ = (s, c=document) => Array.from(c.querySelectorAll(s));
+    const create = (t, attrs={}) => { const e=document.createElement(t); Object.entries(attrs||{}).forEach(([k,v])=>{ if(k==='html') e.innerHTML=v; else e.setAttribute(k,v); }); return e; };
+
+    /* ---------- Remove inlined loader (if any), plus also script-created loader ---------- */
+    const initialLoader = document.getElementById('initial-loader');
+    setTimeout(()=>{ if(initialLoader) initialLoader.classList.add('hidden'); setTimeout(()=> initialLoader && initialLoader.remove(), 1200); }, 900);
+
+    // Create a modal backdrop element (global)
+    const modalBackdrop = create('div', { class: 'modal-backdrop', id: 'global-modal', 'aria-hidden': 'true' });
+    modalBackdrop.innerHTML = `
+      <div class="modal-window" role="dialog" aria-modal="true">
+        <div class="modal-header"><strong id="modal-title">Aviso</strong><button class="close-modal" aria-label="Fechar">✕</button></div>
+        <div class="modal-body"><p id="modal-body">Conteúdo</p></div>
+        <div class="modal-footer"><button class="btn btn-outline close-modal">Fechar</button><button class="btn btn-cta confirm-modal">Confirmar</button></div>
+      </div>`;
+    document.body.appendChild(modalBackdrop);
+
+    function openModal(title, html, onConfirm){
+      $('#modal-title').textContent = title || 'Aviso';
+      $('#modal-body').innerHTML = html || '';
+      modalBackdrop.classList.add('open'); modalBackdrop.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      const closeEls = modalBackdrop.querySelectorAll('.close-modal'); closeEls.forEach(el=>el.addEventListener('click', closeModal));
+      modalBackdrop.querySelector('.confirm-modal').onclick = ()=>{ closeModal(); onConfirm && onConfirm(); };
+      modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) closeModal(); });
+      document.addEventListener('keydown', escClose);
+    }
+    function closeModal(){ modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow=''; document.removeEventListener('keydown', escClose); }
+    function escClose(e){ if(e.key==='Escape') closeModal(); }
+    window.DominaModal = openModal;
+
+    /* ---------- Offcanvas Mobile ---------- */
+    (function initOffcanvas(){
+      const hamb = document.querySelector('.hamburger');
+      const off = document.querySelector('.offcanvas');
+      const overlay = document.querySelector('.offcanvas-overlay');
+      if(!hamb || !off) return;
+
+      function show(){ off.classList.add('open'); overlay.style.display='block'; setTimeout(()=> overlay.classList.add('visible'),20); document.body.style.overflow='hidden'; }
+      function hide(){ off.classList.remove('open'); overlay.classList.remove('visible'); setTimeout(()=> overlay.style.display='none',300); document.body.style.overflow=''; }
+
+      hamb.addEventListener('click', show);
+      off.querySelector('.close-btn').addEventListener('click', hide);
+      overlay.addEventListener('click', hide);
+      off.addEventListener('keydown', (e)=> { if(e.key==='Escape') hide(); });
+    })();
+
+    /* ---------- Dropdowns (basic a11y) ---------- */
+    (function initDropdowns(){
+      $$('.dropdown-toggle').forEach(btn=>{
+        const root = btn.closest('.dropdown');
+        const menu = root.querySelector('.dropdown-menu');
+        btn.setAttribute('aria-expanded','false');
+        btn.addEventListener('click', (e)=> {
+          const open = root.classList.toggle('open');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          if(open){ const focusable = menu.querySelector('a, button, [tabindex]'); focusable && focusable.focus(); }
+        });
       });
+      document.addEventListener('click', (e)=> {
+        $$('.dropdown').forEach(d=>{ if(!d.contains(e.target)) { d.classList.remove('open'); d.querySelector('.dropdown-toggle') && d.querySelector('.dropdown-toggle').setAttribute('aria-expanded','false'); } });
+      });
+    })();
+
+    /* ---------- Theme toggle (persist) ---------- */
+    (function initTheme(){
+      const tbtn = document.querySelector('.theme-toggle');
+      if(!tbtn) return;
+      const stored = localStorage.getItem('domina-theme');
+      if(stored === 'light') document.body.classList.add('light-mode');
+      tbtn.addEventListener('click', ()=> {
+        const isLight = document.body.classList.toggle('light-mode');
+        localStorage.setItem('domina-theme', isLight ? 'light' : 'dark');
+        tbtn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+      });
+    })();
+
+    /* ---------- Sticky CTA — show/hide when hero out of view ---------- */
+    (function initStickyCTA(){
+      const hero = document.getElementById('hero');
+      const sticky = document.querySelector('.sticky-cta');
+      if(!hero || !sticky) return;
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting) sticky.classList.remove('show'); else sticky.classList.add('show');
+        });
+      }, { root: null, threshold: 0, rootMargin: "-10% 0px -70% 0px" });
+      io.observe(hero);
+      sticky.addEventListener('click', ()=> {
+        const vip = document.getElementById('vip'); if(vip) vip.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
+
+    /* ---------- Particles canvas (lightweight) ---------- */
+    (function initParticles(){
+      const canvas = document.createElement('canvas'); canvas.className = 'particles-canvas'; canvas.setAttribute('aria-hidden','true');
+      document.body.appendChild(canvas);
+      const ctx = canvas.getContext('2d'); let w=canvas.width = window.innerWidth; let h=canvas.height = window.innerHeight * 0.65;
+      const count = Math.max(18, Math.floor(w/80)); const particles = [];
+      for(let i=0;i<count;i++){ particles.push({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.6 + 0.6, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.1)*0.3, a: 0.05 + Math.random()*0.35 }); }
+      function draw(){ ctx.clearRect(0,0,w,h); particles.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; if(p.x < -10) p.x = w + 10; if(p.x > w + 10) p.x = -10; if(p.y < -10) p.y = h + 10; if(p.y > h + 10) p.y = -10; ctx.beginPath(); ctx.fillStyle = `rgba(0,255,240,${p.a})`; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); }); requestAnimationFrame(draw); }
+      draw(); window.addEventListener('resize', ()=>{ w=canvas.width = window.innerWidth; h=canvas.height = window.innerHeight * 0.65; });
+    })();
+
+    /* ---------- Parallax: update CSS var --parallax-y ---------- */
+    (function initParallax(){
+      const paras = document.querySelectorAll('.parallax');
+      if(!paras.length) return;
+      function update(){ paras.forEach(el=>{ const rect = el.getBoundingClientRect(); const speed = parseFloat(el.getAttribute('data-parallax-speed')||'0.18'); const y = (window.innerHeight - rect.top) * speed; el.style.setProperty('--parallax-y', y + 'px'); }); }
+      update(); window.addEventListener('scroll', ()=> requestAnimationFrame(update)); window.addEventListener('resize', ()=> requestAnimationFrame(update));
+    })();
+
+    /* ---------- Carousel (basic) ---------- */
+    (function initCarousel(){
+      document.querySelectorAll('.carousel-wrap').forEach(wrap=>{
+        const track = wrap.querySelector('.carousel-track'); if(!track) return;
+        const left = wrap.querySelector('.carousel-arrow.left'); const right = wrap.querySelector('.carousel-arrow.right');
+        let index = 0; const items = Array.from(track.children);
+        function update(){ const itemW = items[0] ? items[0].offsetWidth + 16 : 260; track.style.transform = `translateX(-${index * itemW}px)`; }
+        if(right) right.addEventListener('click', ()=>{ index = Math.min(index+1, items.length-1); update(); });
+        if(left) left.addEventListener('click', ()=>{ index = Math.max(index-1, 0); update(); });
+        // touch
+        let sx=null, cx=null;
+        track.addEventListener('touchstart', e=> { sx = e.touches[0].clientX; });
+        track.addEventListener('touchmove', e=> { if(sx===null) return; cx = e.touches[0].clientX; });
+        track.addEventListener('touchend', e=> { if(sx===null || cx===null){ sx=cx=null; return;} const diff = sx - cx; if(Math.abs(diff) > 40){ if(diff>0) index = Math.min(index+1, items.length-1); else index = Math.max(index-1,0); update(); } sx=cx=null; });
+        setTimeout(update,120); window.addEventListener('resize', update);
+      });
+    })();
+
+    /* ---------- Tooltips (data-tooltip attr) ---------- */
+    (function initTooltips(){
+      document.querySelectorAll('[data-tooltip]').forEach(el=>{
+        let t;
+        function show(){ el.classList.add('tooltip-visible'); }
+        function hide(){ el.classList.remove('tooltip-visible'); }
+        el.addEventListener('mouseenter', ()=>{ t=setTimeout(show,60) });
+        el.addEventListener('mouseleave', ()=>{ clearTimeout(t); hide(); });
+        el.addEventListener('focus', show); el.addEventListener('blur', hide);
+      });
+    })();
+
+    /* ---------- Form validation (basic) ---------- */
+    (function initForms(){
+      document.querySelectorAll('form').forEach(form=>{
+        form.addEventListener('submit', e=>{
+          const inputs = Array.from(form.querySelectorAll('input[required],textarea[required],select[required]'));
+          let valid = true;
+          inputs.forEach(inp => { if(!inp.value.trim()){ inp.classList.add('invalid'); valid=false; } else { inp.classList.remove('invalid'); inp.classList.add('valid'); } });
+          if(!valid){ e.preventDefault(); openModal('Erro', '<p>Por favor preencha os campos obrigatórios.</p>'); return false; }
+          const submitBtn = form.querySelector('button[type="submit"], .btn'); if(submitBtn){ submitBtn.classList.add('is-loading'); setTimeout(()=> submitBtn.classList.remove('is-loading'), 2200); }
+        });
+      });
+    })();
+
+    /* ---------- FAQ keyboard support ---------- */
+    (function initFAQ(){
+      document.querySelectorAll('.faq-item').forEach(item=>{
+        const btn = item.querySelector('.faq-question');
+        btn.addEventListener('click', ()=> item.classList.toggle('open'));
+        btn.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') item.classList.toggle('open'); });
+      });
+    })();
+
+    /* ---------- Buy confirmation (modal) ---------- */
+    (function initBuys(){
+      document.querySelectorAll('.btn-buy').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          // if the link is external checkout, let it go; otherwise show confirm
+          const url = btn.getAttribute('href') || '';
+          if(url && url.includes('http')){ // assume external checkout: track and proceed
+            console.log('Tracking click buy (external):', url);
+            // track event
+          }
+          // additionally show a modal confirmation for demos when link is '#'
+          if(!url || url.endsWith('#')){
+            e.preventDefault();
+            openModal('Confirmar Compra', '<p>Deseja realmente comprar este produto agora?</p>', ()=>{ openModal('Sucesso','<p>Compra efetuada com sucesso! Confira seu e-mail.</p>'); });
+          } else {
+            // for real checkout link, optionally show brief toast or continue
+            // small tracking
+            console.log('TrackEvent: click_buy', { label: btn.textContent.trim(), href: url });
+          }
+        });
+      });
+    })();
+
+    /* ---------- Scroll reveal (IntersectionObserver) ---------- */
+    (function initReveal(){
+      const reveals = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries, obs)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){ entry.target.classList.add('visible'); obs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(r => io.observe(r));
+    })();
+
+    /* ---------- Inject trust badges in product cards ---------- */
+    (function injectBadges(){
+      document.querySelectorAll('.product-card').forEach((card, i)=>{
+        const badge = create('div', { class: 'trust-badge u-fade-in', html: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Garantido' });
+        if(i % 1 === 0) card.prepend(badge);
+      });
+    })();
+
+    /* ---------- Analytics simple (console) ---------- */
+    (function analytics(){
+      function track(ev, data={}){ console.info('AnalyticsEvent:', ev, data); /* Replace with real analytics call */ }
+      document.querySelectorAll('.btn-buy, .btn-cta').forEach(btn=>{
+        btn.addEventListener('click', ()=> track('click_buy_button', { label: btn.textContent.trim() }) );
+      });
+    })();
+
+    /* ---------- Timestamp in footer ---------- */
+    (function footerYear(){ const y = new Date().getFullYear(); const el = document.getElementById('yr'); if(el) el.textContent = y; })();
+
+    /* ---------- Final small UX tweaks ---------- */
+    document.addEventListener('DOMContentLoaded', ()=> {
+      // show initial reveals with slight delay for first screen elements
+      setTimeout(()=> $$('.reveal').slice(0,5).forEach((el, i)=> setTimeout(()=> el.classList.add('visible'), i*120)), 300);
     });
+  })();
   </script>
 </body>
 </html>

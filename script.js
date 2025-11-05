@@ -1,268 +1,419 @@
-/* app.js — interatividade & automação
-   - Smooth scroll
-   - Mobile nav toggle (cria hamburger)
-   - Scroll reveal (IntersectionObserver)
-   - Active nav link update
-   - Modal product / buy handler (M-Pesa + Hotmart + WhatsApp)
-   - Basic form validation + feedback
-   - Back-to-top show/hide
-*/
+<!-- ===================== PARTE 2 - JAVASCRIPT ===================== -->
+<script>
+/* ==========================================================================
+   DOMINA ACADEMY — PART 2 SCRIPT
+   - Offcanvas toggle
+   - Dropdown accessibility
+   - Modal open/close
+   - Theme toggle (persistent)
+   - Sticky CTA visibility (IntersectionObserver)
+   - Particles (canvas)
+   - Parallax simple
+   - Carousel simple (touch + arrows)
+   - Tooltip toggle
+   - Form validation
+   ========================================================================== */
+(function(){
+  'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
-  /* ===== VARS ===== */
-  const siteHeader = document.querySelector('.header-inner') || document.querySelector('header');
-  const mainNav = document.querySelector('#main-nav');
-  const navList = mainNav ? mainNav.querySelector('ul') : null;
-  const navLinks = mainNav ? Array.from(mainNav.querySelectorAll('a[href^="#"]')) : [];
-  const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-  const templatesRoot = document.getElementById('modal-templates');
-  const tplProduct = document.getElementById('tpl-product-modal');
-  const tplWaitlist = document.getElementById('tpl-waitlist-confirm');
+  /* -----------------------------
+     Helpers
+  ------------------------------*/
+  const $ = (sel, ctx=document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+  const on = (elem, ev, fn) => elem && elem.addEventListener(ev, fn);
+  const createEl = (tag, attrs={}) => {
+    const el = document.createElement(tag);
+    Object.entries(attrs).forEach(([k,v])=>{
+      if(k==='html') el.innerHTML=v;
+      else el.setAttribute(k,v);
+    });
+    return el;
+  };
 
-  /* ===== MOBILE HAMBURGER (auto insert) ===== */
-  function createHamburger(){
-    if (document.querySelector('.hamburger-icon')) return;
-    const btn = document.createElement('button');
-    btn.className = 'hamburger-icon';
-    btn.setAttribute('aria-label', 'Abrir menu');
-    btn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
-    btn.style.background = 'transparent';
-    btn.style.border = 'none';
-    btn.style.cursor = 'pointer';
-    btn.style.display = 'none';
-    btn.style.alignItems = 'center';
-    btn.style.justifyContent = 'center';
-    btn.style.padding = '6px';
-    // place in header
-    const header = document.querySelector('.header-inner');
-    if (header) {
-      header.insertBefore(btn, header.children[1]);
-      btn.style.display = '';
-    }
-    btn.addEventListener('click', () => {
-      if (!navList) return;
-      navList.classList.toggle('open');
-      btn.classList.toggle('open');
+  /* -----------------------------
+     OFFCANVAS (mobile menu)
+  ------------------------------*/
+  function initOffcanvas() {
+    const hamb = document.querySelector('.hamburger');
+    const off = document.querySelector('.offcanvas');
+    const overlay = document.querySelector('.offcanvas-overlay');
+    if(!hamb || !off) return;
+
+    function open(){ off.classList.add('open'); document.body.style.overflow='hidden'; overlay.style.display='block'; setTimeout(()=>overlay.classList.add('visible'),10); }
+    function close(){ off.classList.remove('open'); document.body.style.overflow=''; overlay.classList.remove('visible'); setTimeout(()=>overlay.style.display='none', 300); }
+
+    hamb.addEventListener('click', ()=> {
+      open();
+    });
+    const closeBtn = off.querySelector('.close-btn');
+    if(closeBtn) closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', close);
+
+    // trap focus (basic)
+    off.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape') close();
     });
   }
-  createHamburger();
 
-  /* ===== SMOOTH SCROLL ===== */
-  navLinks.forEach(a=>{
-    a.addEventListener('click', e=>{
-      e.preventDefault();
-      const id = a.getAttribute('href');
-      const el = document.querySelector(id);
-      if (!el) return;
-      const y = el.getBoundingClientRect().top + window.scrollY - (siteHeader ? siteHeader.offsetHeight + 8 : 24);
-      window.scrollTo({top: y, behavior: 'smooth'});
-      // close mobile menu if open
-      if (navList && navList.classList.contains('open')) navList.classList.remove('open');
-    });
-  });
-
-  /* ===== ACTIVE NAV LINK ON SCROLL ===== */
-  const obsOptions = { root: null, rootMargin: '0px 0px -35% 0px', threshold: 0 };
-  const sectionObserver = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      const id = entry.target.id;
-      const link = navLinks.find(a => a.getAttribute('href') === `#${id}`);
-      if (entry.isIntersecting) {
-        navLinks.forEach(n=>n.classList.remove('active'));
-        if (link) link.classList.add('active');
-      }
-    });
-  }, obsOptions);
-  sections.forEach(s=>sectionObserver.observe(s));
-
-  /* ===== SCROLL REVEAL (for elements with .is-hidden) ===== */
-  const revealObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        entry.target.classList.remove('is-hidden');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, {threshold: 0.12});
-  // init: mark elements
-  document.querySelectorAll('.card, .hero-copy, .product, .course, .testimonial, .wrap > h2, .curriculum').forEach(el=>{
-    if (!el.classList.contains('is-visible')) el.classList.add('is-hidden');
-    revealObserver.observe(el);
-  });
-
-  /* ===== BACK TO TOP ===== */
-  const backToTop = document.createElement('button');
-  backToTop.id = 'back-to-top';
-  backToTop.textContent = '↑';
-  document.body.appendChild(backToTop);
-  backToTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
-  window.addEventListener('scroll', ()=> {
-    if (window.scrollY > 600) backToTop.style.display = 'block';
-    else backToTop.style.display = 'none';
-  });
-
-  /* ===== MODAL HELPERS ===== */
-  function openModal(node){
-    node.classList.add('show');
-    document.body.style.overflow = 'hidden';
-    node.addEventListener('click', e => {
-      if (e.target === node) closeModal(node);
-    });
-    const closeBtns = node.querySelectorAll('.modal-close');
-    closeBtns.forEach(b => b.addEventListener('click', ()=> closeModal(node)));
-  }
-  function closeModal(node){
-    node.classList.remove('show');
-    document.body.style.overflow = '';
-    node.remove();
-  }
-
-  /* ===== PRODUCT / BUY HANDLERS ===== */
-  function createProductModal({title, desc, price, productId, whatsappMsg}){
-    let tpl = tplProduct;
-    if (!tpl) {
-      // fallback modal
-      const box = document.createElement('div');
-      box.className = 'modal show';
-      box.innerHTML = `<div class="modal-inner card"><button class="modal-close btn">Fechar</button><div class="modal-content"><h3>${title}</h3><p class="muted">${desc}</p><div class="modal-price">${price}</div><div style="margin-top:1rem;display:flex;gap:.6rem"><button class="btn-primary btn-buy-wp">Pagar via M-Pesa / WhatsApp</button><button class="btn-outline btn-hotmart">Comprar (Hotmart)</button></div></div></div>`;
-      document.body.appendChild(box);
-      box.querySelector('.btn-buy-wp').addEventListener('click', ()=> openWhatsApp(whatsappMsg || `Quero comprar: ${title} — ${price}`));
-      box.querySelector('.btn-hotmart').addEventListener('click', ()=> {
-        alert('Redirecionar para Hotmart (simulação).');
-        closeModal(box);
+  /* -----------------------------
+     DROPDOWNS (aria + trap)
+  ------------------------------*/
+  function initDropdowns() {
+    $$('.dropdown-toggle').forEach(toggle => {
+      const root = toggle.closest('.dropdown');
+      const menu = root.querySelector('.dropdown-menu');
+      toggle.setAttribute('aria-expanded','false');
+      toggle.addEventListener('click', e=>{
+        const isOpen = root.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        if(isOpen) {
+          // focus first link
+          const first = menu.querySelector('a, button, [tabindex]');
+          first && first.focus();
+        }
       });
-      return box;
+      // close on outside click
+      document.addEventListener('click', e=>{
+        if(!root.contains(e.target)) {
+          root.classList.remove('open');
+          toggle.setAttribute('aria-expanded','false');
+        }
+      });
+    });
+  }
+
+  /* -----------------------------
+     MODAL (simple)
+  ------------------------------*/
+  function initModals() {
+    const modalBackdrop = createEl('div', { class: 'modal-backdrop', id: 'global-modal' });
+    modalBackdrop.innerHTML = `<div class="modal-window" role="dialog" aria-modal="true"><div class="modal-header"><strong id="modal-title">Aviso</strong><button class="close-modal" aria-label="Fechar">✕</button></div><div class="modal-body"><p id="modal-body">Conteúdo</p></div><div class="modal-footer"><button class="btn btn-outline close-modal">Fechar</button><button class="btn btn-cta confirm-modal">Confirmar</button></div></div>`;
+    document.body.appendChild(modalBackdrop);
+
+    function openModal(title, html, onConfirm) {
+      $('#modal-title').textContent = title || 'Aviso';
+      $('#modal-body').innerHTML = html || '';
+      modalBackdrop.classList.add('open');
+      document.body.style.overflow='hidden';
+
+      const closeEls = modalBackdrop.querySelectorAll('.close-modal');
+      closeEls.forEach(el=>el.addEventListener('click', closeModal));
+      modalBackdrop.querySelector('.confirm-modal').onclick = ()=>{
+        closeModal();
+        onConfirm && onConfirm();
+      };
+      modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) closeModal(); });
+      modalBackdrop.addEventListener('keydown', (e)=> { if(e.key==='Escape') closeModal(); });
     }
-    const clone = tpl.content.cloneNode(true);
-    const wrapper = document.createElement('div');
-    wrapper.className = 'modal show';
-    wrapper.appendChild(clone);
-    // populate
-    wrapper.querySelector('.modal-title')?.replaceWith(Object.assign(document.createElement('h3'), {className:'modal-title', textContent:title}));
-    wrapper.querySelector('.modal-desc')?.textContent = desc || '';
-    const modalPrice = wrapper.querySelector('.modal-price');
-    if(modalPrice) modalPrice.textContent = price || '';
-    document.body.appendChild(wrapper);
-    // handlers
-    const btnWp = wrapper.querySelector('.modal-actions .btn-primary');
-    const btnHot = wrapper.querySelector('.modal-actions .btn-outline');
-    if (btnWp) btnWp.addEventListener('click', ()=> openWhatsApp(whatsappMsg || `Olá! Quero comprar: ${title} — ${price}. ID:${productId || ''}`));
-    if (btnHot) btnHot.addEventListener('click', ()=> {
-      alert('Redirecionar para Hotmart (simulação).');
-      closeModal(wrapper);
-    });
-    // close
-    wrapper.querySelectorAll('.modal-close').forEach(b=>b.addEventListener('click', ()=> closeModal(wrapper)));
-    wrapper.addEventListener('click', e => { if (e.target === wrapper) closeModal(wrapper) });
-    return wrapper;
+    function closeModal(){ modalBackdrop.classList.remove('open'); document.body.style.overflow=''; }
+
+    // expose on window for demos
+    window.DominaModal = openModal;
   }
 
-  function openWhatsApp(message){
-    const phone = '258833869285'; // your number in html already
-    const encoded = encodeURIComponent(message);
-    const url = `https://wa.me/${phone}?text=${encoded}`;
-    window.open(url, '_blank', 'noopener');
-  }
+  /* -----------------------------
+     THEME TOGGLE (persist)
+  ------------------------------*/
+  function initThemeToggle() {
+    const toggle = document.querySelector('.theme-toggle');
+    if(!toggle) return;
+    const current = localStorage.getItem('domina-theme');
+    if(current==='light') document.body.classList.add('light-mode');
 
-  // attach buy buttons
-  document.querySelectorAll('[data-buy],[data-hotmart]').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      const el = e.currentTarget;
-      const pid = el.dataset.buy || el.dataset.hotmart || el.getAttribute('data-product') || el.closest('.product')?.dataset?.id || '';
-      const title = el.closest('.product')?.querySelector('h3')?.textContent
-                    || el.closest('.card')?.querySelector('h3')?.textContent
-                    || document.querySelector('.modal-title')?.textContent
-                    || 'Produto';
-      const desc = el.closest('.product')?.querySelector('p.muted')?.textContent || '';
-      const price = el.closest('.product')?.querySelector('.price')?.textContent || el.closest('.card')?.querySelector('.price')?.textContent || '';
-      createProductModal({title, desc, price, productId: pid});
-    });
-  });
-
-  // general WhatsApp contact buttons
-  document.querySelectorAll('[data-contact]').forEach(btn=>{
-    btn.addEventListener('click', ()=> {
-      const tag = btn.dataset.contact;
-      openWhatsApp(`Olá! Quero mais info sobre: ${tag}`);
-    });
-  });
-
-  /* ===== FORMS: basic validation & fake submit ===== */
-  function basicValidateForm(form){
-    let ok = true;
-    const required = form.querySelectorAll('[required]');
-    required.forEach(inp=>{
-      inp.classList.remove('invalid');
-      if (!inp.value || inp.value.trim()===''){
-        ok = false;
-        inp.classList.add('invalid');
-      }
-    });
-    return ok;
-  }
-
-  function showInlineMessage(el, msg, type='success'){
-    const msgEl = document.createElement('div');
-    msgEl.className = 'form-msg';
-    msgEl.style.marginTop = '.6rem';
-    msgEl.textContent = msg;
-    msgEl.style.color = (type === 'error') ? '#B91C1C' : '#064E3B';
-    el.appendChild(msgEl);
-    setTimeout(()=> msgEl.remove(), 5000);
-  }
-
-  const waitlistForm = document.getElementById('form-waitlist');
-  if (waitlistForm){
-    waitlistForm.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const ok = basicValidateForm(waitlistForm);
-      if (!ok){
-        showInlineMessage(waitlistForm, 'Por favor, preenche os campos obrigatórios.', 'error');
-        return;
-      }
-      // fake submit
-      showInlineMessage(waitlistForm, 'Inscrição recebida — verifica o WhatsApp em breve!', 'success');
-      // show modal confirmation
-      if (tplWaitlist){
-        const clone = tplWaitlist.content.cloneNode(true);
-        const wrapper = document.createElement('div');
-        wrapper.className = 'modal show';
-        wrapper.appendChild(clone);
-        document.body.appendChild(wrapper);
-        wrapper.querySelectorAll('.modal-close').forEach(b => b.addEventListener('click', ()=> wrapper.remove()));
-        wrapper.addEventListener('click', e => { if (e.target === wrapper) wrapper.remove()});
-        // reset
-        waitlistForm.reset();
-      }
+    toggle.addEventListener('click', ()=>{
+      const isLight = document.body.classList.toggle('light-mode');
+      localStorage.setItem('domina-theme', isLight ? 'light' : 'dark');
+      // small a11y feedback
+      toggle.setAttribute('aria-pressed', isLight ? 'true' : 'false');
     });
   }
 
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm){
-    contactForm.addEventListener('submit', e=>{
-      e.preventDefault();
-      const ok = basicValidateForm(contactForm);
-      if (!ok) { showInlineMessage(contactForm, 'Preenche os campos obrigatórios.', 'error'); return; }
-      showInlineMessage(contactForm, 'Mensagem enviada — responderemos por WhatsApp / e-mail.', 'success');
-      contactForm.reset();
+  /* -----------------------------
+     STICKY CTA (IntersectionObserver)
+     Shows sticky CTA when hero is out of view
+  ------------------------------*/
+  function initStickyCta() {
+    const hero = document.querySelector('.hero');
+    const sticky = document.querySelector('.sticky-cta');
+    if(!hero || !sticky) return;
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) sticky.classList.remove('show');
+        else sticky.classList.add('show');
+      });
+    }, { root: null, threshold: 0, rootMargin: "-10% 0px -70% 0px" });
+    observer.observe(hero);
+    // click behavior - scroll or open modal
+    sticky.addEventListener('click', (ev)=>{
+      ev.preventDefault();
+      // call modal or go to vip anchor
+      const vip = document.querySelector('#vip');
+      if(vip) vip.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
-  /* ===== Keyboard accessibility: close modals with ESC ===== */
-  document.addEventListener('keydown', (e)=>{
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.modal.show').forEach(m => m.remove());
-      document.body.style.overflow = '';
+  /* -----------------------------
+     PARTICLES (canvas) — lightweight
+  ------------------------------*/
+  function initParticles() {
+    // create canvas element under body at top of page (behind hero)
+    const canvas = createEl('canvas', { class: 'particles-canvas', 'aria-hidden':'true' });
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight * 0.65; // only upper portion (hero)
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.position = 'absolute';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = 0;
+    const particles = [];
+    const count = Math.max(20, Math.floor(w / 80));
+    for(let i=0;i<count;i++){
+      particles.push({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*1.6 + 0.6,
+        vx: (Math.random()-0.5) * 0.3,
+        vy: (Math.random()-0.1) * 0.3,
+        alpha: 0.05 + Math.random()*0.35
+      });
     }
+
+    function draw() {
+      ctx.clearRect(0,0,w,h);
+      particles.forEach(p=>{
+        p.x += p.vx;
+        p.y += p.vy;
+        if(p.x < -10) p.x = w + 10;
+        if(p.x > w + 10) p.x = -10;
+        if(p.y < -10) p.y = h + 10;
+        if(p.y > h + 10) p.y = -10;
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(0,255,240,${p.alpha})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+    window.addEventListener('resize', ()=>{ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight * 0.65; });
+  }
+
+  /* -----------------------------
+     PARALLAX (simple) — updates CSS var --parallax-y on container
+  ------------------------------*/
+  function initParallax() {
+    const paras = $$('.parallax');
+    if(!paras.length) return;
+    function update(){
+      paras.forEach(el=>{
+        const rect = el.getBoundingClientRect();
+        const speed = parseFloat(el.getAttribute('data-parallax-speed') || '0.18');
+        const y = (window.innerHeight - rect.top) * speed;
+        el.style.setProperty('--parallax-y', y + 'px');
+      });
+    }
+    update();
+    window.addEventListener('scroll', () => { window.requestAnimationFrame(update); });
+    window.addEventListener('resize', () => { window.requestAnimationFrame(update); });
+  }
+
+  /* -----------------------------
+     CAROUSEL (touch + arrows)
+  ------------------------------*/
+  function initCarousels() {
+    $$('.carousel-wrap').forEach(wrap=>{
+      const track = wrap.querySelector('.carousel-track');
+      const left = wrap.querySelector('.carousel-arrow.left');
+      const right = wrap.querySelector('.carousel-arrow.right');
+      if(!track) return;
+      let index = 0;
+      const items = track.children;
+      const perView = Math.max(1, Math.floor(wrap.offsetWidth / 280));
+      function update(){ track.style.transform = `translateX(-${index * (items[0].offsetWidth + 16)}px)`; }
+      if(right) right.addEventListener('click', ()=>{ index = Math.min(index+1, items.length-1); update();});
+      if(left) left.addEventListener('click', ()=>{ index = Math.max(index-1, 0); update();});
+      // touch support
+      let startX = null, currentX = null;
+      track.addEventListener('touchstart', e=> { startX = e.touches[0].clientX; });
+      track.addEventListener('touchmove', e=> { if(!startX) return; currentX = e.touches[0].clientX; });
+      track.addEventListener('touchend', e=> {
+        if(startX === null || currentX === null) { startX = currentX = null; return; }
+        const diff = startX - currentX;
+        if(Math.abs(diff) > 40) { if(diff > 0) index = Math.min(index+1, items.length-1); else index = Math.max(index-1, 0); update(); }
+        startX = currentX = null;
+      });
+      // initial update
+      setTimeout(update, 120);
+      window.addEventListener('resize', update);
+    });
+  }
+
+  /* -----------------------------
+     TOOLTIP (data-tooltip) — hover + focus handling
+  ------------------------------*/
+  function initTooltips() {
+    $$('[data-tooltip]').forEach(el=>{
+      let timer;
+      function show(){ el.classList.add('tooltip-visible'); }
+      function hide(){ el.classList.remove('tooltip-visible'); }
+      el.addEventListener('mouseenter', ()=>{ timer = setTimeout(show, 60); });
+      el.addEventListener('mouseleave', ()=>{ clearTimeout(timer); hide(); });
+      el.addEventListener('focus', show);
+      el.addEventListener('blur', hide);
+    });
+  }
+
+  /* -----------------------------
+     FORM VALIDATION (basic)
+  ------------------------------*/
+  function initForms() {
+    $$('form').forEach(form=>{
+      form.addEventListener('submit', e=>{
+        const inputs = $$('.input', form);
+        let valid = true;
+        inputs.forEach(inp=>{
+          if(inp.required && !inp.value.trim()){
+            inp.classList.add('invalid');
+            valid = false;
+          } else {
+            inp.classList.remove('invalid');
+            inp.classList.add('valid');
+          }
+        });
+        if(!valid){
+          e.preventDefault();
+          // show modal with message
+          window.DominaModal && window.DominaModal('Erro', '<p>Por favor, preencha os campos obrigatórios.</p>');
+        } else {
+          // show loading state on submit btn if present
+          const submitBtn = form.querySelector('button[type="submit"], .btn');
+          if(submitBtn){
+            submitBtn.classList.add('is-loading');
+            setTimeout(()=> submitBtn.classList.remove('is-loading'), 2500);
+          }
+        }
+      });
+    });
+  }
+
+  /* -----------------------------
+     FAQ: improve keyboard + a11y
+  ------------------------------*/
+  function initFAQ() {
+    $$('.faq-item').forEach(item=>{
+      const btn = item.querySelector('.faq-question');
+      btn.addEventListener('click', ()=> item.classList.toggle('open'));
+      btn.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') item.classList.toggle('open'); });
+    });
+  }
+
+  /* -----------------------------
+     CARDS: buy confirmation (demo)
+  ------------------------------*/
+  function initBuyButtons() {
+    $$('.btn-buy, .btn-primary.buy, .btn-cta.buy').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const title = 'Confirmar Compra';
+        const html = '<p>Deseja realmente comprar este produto agora? Clique confirmar para prosseguir.</p>';
+        window.DominaModal && window.DominaModal(title, html, ()=> {
+          // simulate success
+          const successHtml = '<p>Compra efetuada com sucesso! Verifique seu email para o acesso.</p>';
+          window.DominaModal && window.DominaModal('Sucesso', successHtml);
+        });
+      });
+    });
+  }
+
+  /* -----------------------------
+     INITIALIZE ALL
+  ------------------------------*/
+  function initAll() {
+    initOffcanvas();
+    initDropdowns();
+    initModals();
+    initThemeToggle();
+    initStickyCta();
+    initParticles();
+    initParallax();
+    initCarousels();
+    initTooltips();
+    initForms();
+    initFAQ();
+    initBuyButtons();
+  }
+
+  // wait DOM
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
+  else initAll();
+
+  /* ===================== END PART 2 SCRIPT ===================== */
+})();
+
+/* ===================== PARTE 3 — JS FINAL ===================== */
+(function(){
+  'use strict';
+
+  // ------------------- Loader -------------------
+  const loader = document.createElement('div');
+  loader.className = 'loader-overlay';
+  loader.innerHTML = `<div class="loader-logo brand-scan">DOMINA ACADEMY</div>`;
+  document.body.appendChild(loader);
+  window.addEventListener('load', ()=> {
+    setTimeout(()=> loader.classList.add('hidden'), 800);
+    setTimeout(()=> loader.remove(), 1600);
   });
 
-  /* ===== Small optimization: prefill whatsapp buy links on .btn-primary[data-buy] hover ===== */
-  document.querySelectorAll('button[data-buy]').forEach(btn=>{
-    btn.addEventListener('mouseenter', () => {
-      btn.title = 'Clicar para comprar via WhatsApp / M-Pesa';
+  // ------------------- Scroll Reveal -------------------
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(r => observer.observe(r));
+
+  // ------------------- Click Tracking -------------------
+  function track(eventName, details={}) {
+    console.log('TrackEvent:', eventName, details);
+    // Aqui pode ser substituído por dataLayer.push() ou fetch para analytics
+  }
+
+  document.querySelectorAll('.btn-buy, .btn-cta').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      track('click_buy_button',{label:btn.textContent.trim()});
     });
   });
 
-  /* ===== END ===== */
-});
+  // ------------------- Badge Injection -------------------
+  document.querySelectorAll('.product-card').forEach((card,i)=>{
+    const badge = document.createElement('div');
+    badge.className = 'trust-badge u-fade-in';
+    badge.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Garantido`;
+    if(i%2===0) card.prepend(badge);
+  });
+
+  // ------------------- Scroll CTA pulse -------------------
+  const cta = document.querySelector('.btn-cta');
+  if(cta){
+    window.addEventListener('scroll',()=>{
+      const y = window.scrollY;
+      cta.style.boxShadow = y>300 ? '0 0 40px rgba(0,255,240,0.15)' : '';
+    });
+  }
+
+  // ------------------- Animate Headings -------------------
+  const titles = document.querySelectorAll('h1,h2,h3');
+  titles.forEach(t=>{
+    t.classList.add('brand-scan');
+  });
+
+})();
+
+</script>
