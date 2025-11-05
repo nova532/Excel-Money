@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista VIP — Domina Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* RESET */
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+  body{background:#0D1117;color:#FFF;line-height:1.7;scroll-behavior:smooth;}
+  a{text-decoration:none;color:inherit;transition:0.3s;}
+  a:hover{color:#00FFF0;}
+  .container{width:90%;max-width:1200px;margin:0 auto;padding:3rem 0;}
+
+  /* HERO */
+  .hero{text-align:center;padding:4rem 2rem;background:radial-gradient(circle at top right, rgba(0,255,240,0.05), transparent);}
+  .hero h1{font-size:2.5rem;color:#00C896;margin-bottom:1rem;}
+  .hero p{font-size:1.2rem;color:#AAA;margin-bottom:2rem;}
+  .hero .btn{padding:1rem 3rem;font-weight:700;border-radius:15px;background:linear-gradient(135deg,#00C896,#00FFF0);color:#0D1117;transition:0.3s;}
+  .hero .btn:hover{transform:translateY(-3px) scale(1.05);}
+
+  /* BENEFÍCIOS */
+  .benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-top:4rem;}
+  .benefit-card{background:rgba(17,25,33,0.85);padding:2rem;border-radius:20px;text-align:center;box-shadow:0 10px 40px rgba(0,200,150,0.3);transition:0.4s;}
+  .benefit-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 15px 50px rgba(0,255,200,0.4);}
+  .benefit-card h3{color:#00FFF0;margin-bottom:1rem;font-size:1.3rem;}
+  .benefit-card p{color:#AAA;font-size:0.95rem;}
+
+  /* FORM */
+  .waitlist-form{background:rgba(17,25,33,0.85);padding:2rem;border-radius:20px;margin:4rem auto;text-align:center;max-width:500px;box-shadow:0 10px 40px rgba(0,200,150,0.3);}
+  .waitlist-form h2{color:#00C896;margin-bottom:1rem;}
+  .waitlist-form p{color:#AAA;margin-bottom:2rem;}
+  .waitlist-form input{width:80%;padding:1rem;margin-bottom:1rem;border-radius:10px;border:none;}
+  .waitlist-form button{padding:1rem 2rem;font-weight:700;border-radius:15px;background:linear-gradient(135deg,#00C896,#00FFF0);color:#0D1117;cursor:pointer;transition:0.3s;}
+  .waitlist-form button:hover{transform:translateY(-3px) scale(1.05);}
+
+  /* GARANTIA E ESCASSEZ */
+  .guarantee{background:rgba(0,255,200,0.05);padding:1rem 2rem;border-radius:15px;margin-top:2rem;color:#AAA;text-align:center;}
+  .scarcity{color:#00FFF0;font-weight:700;margin-top:1rem;}
+
+  /* RESPONSIVO */
+  @media(max-width:768px){.benefits{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Entre para a Lista VIP 🚀</h1>
+    <p>Seja o primeiro a acessar conteúdos exclusivos, descontos e suporte prioritário. Vagas limitadas!</p>
+    <a href="#formulario" class="btn">Entrar Agora →</a>
+  </section>
+
+  <!-- BENEFÍCIOS -->
+  <section class="benefits">
+    <div class="benefit-card">
+      <h3>Templates Exclusivos</h3>
+      <p>Acesso antecipado a planilhas profissionais que não estão disponíveis para o público geral.</p>
+    </div>
+    <div class="benefit-card">
+      <h3>Cursos VIP</h3>
+      <p>Materiais e aulas exclusivas, atualizadas constantemente, para acelerar seu aprendizado.</p>
+    </div>
+    <div class="benefit-card">
+      <h3>Suporte Prioritário</h3>
+      <p>Seus dúvidas serão respondidas com prioridade pelo time Domina Academy.</p>
+    </div>
+  </section>
+
+  <!-- FORMULÁRIO DE ESPERA -->
+  <section id="formulario" class="waitlist-form">
+    <h2>Reserve Sua Vaga</h2>
+    <p>Preencha seus dados e receba acesso imediato ao grupo VIP de espera.</p>
+    <form action="https://wa.me/25884XXXXXXX?text=Olá!%20Quero%20entrar%20na%20Lista%20VIP%20da%20Domina%20Academy" method="get" target="_blank">
+      <input type="text" name="nome" placeholder="Seu Nome" required>
+      <input type="email" name="email" placeholder="Seu Email" required>
+      <button type="submit">Entrar na Lista VIP →</button>
+    </form>
+    <div class="guarantee">
+      ✅ Garantia de que você será adicionado ao grupo VIP e receberá conteúdos exclusivos.
+      <div class="scarcity">Vagas Limitadas!</div>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>
