@@ -3,523 +3,276 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Domina Academy — Aprende. Cria. Ganha. | Excel e Finanças Digitais</title>
-  <meta name="description" content="Aprende, cria e ganha com a Domina Academy. Cursos, planilhas e ferramentas práticas para dominar o Excel, finanças e gestão digital.">
-  <meta name="keywords" content="Domina Academy, Excel, planilhas, finanças, gestão, cursos, Moçambique, dashboards, produtividade">
-  <meta name="author" content="Domina Academy">
-  <meta name="theme-color" content="#00C896">
-  <meta property="og:title" content="Domina Academy — Aprende. Cria. Ganha.">
-  <meta property="og:description" content="Domina o Excel e transforma teu conhecimento em renda digital.">
-  <meta property="og:image" content="img/preview.jpg">
-  <meta property="og:type" content="website">
+  <title>Domina Academy — Aprende. Cria. Ganha. | Excel & Finanças Digitais</title>
+  <meta name="description" content="Aprende, cria e ganha com a Domina Academy. Cursos, planilhas e ferramentas práticas para dominar Excel e finanças digitais.">
   <link rel="icon" href="img/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+    /* ===================== RESET ===================== */
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;scroll-behavior:smooth;}
+    html{scroll-padding-top:100px;}
+    body{background:#0D1117;color:#FFF;line-height:1.7;overflow-x:hidden;}
+    a{text-decoration:none;color:inherit;transition:0.3s;}
+    a:hover{color:#00FFF0;}
+    .container{width:90%;max-width:1400px;margin:0 auto;position:relative;}
+
+    /* ===================== BOTÕES ===================== */
+    .btn{cursor:pointer;border:none;border-radius:15px;font-weight:800;text-transform:uppercase;padding:1rem 3rem;transition:0.3s;}
+    .btn-primary{background:linear-gradient(135deg,#00C896,#00FFF0);color:#0D1117;box-shadow:0 10px 30px rgba(0,200,150,0.5);}
+    .btn-primary:hover{transform:translateY(-5px) scale(1.05);box-shadow:0 15px 40px rgba(0,255,200,0.6);}
+    .btn-outline{border:2px solid #00C896;color:#00C896;background:transparent;}
+    .btn-outline:hover{background:#00C896;color:#0D1117;}
+
+    /* ===================== HEADER ===================== */
+    header{position:sticky;top:0;z-index:999;background:rgba(13,17,23,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,255,240,0.1);}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;}
+    .brand{display:flex;align-items:center;gap:1rem;cursor:pointer;}
+    .logo{font-size:2.4rem;font-weight:900;color:#00C896;text-shadow:0 0 20px rgba(0,255,240,0.6);}
+    .brand-text h1{font-size:1.9rem;font-weight:800;color:#fff;}
+    .brand-text .tagline{font-size:0.95rem;color:#CCCCCC;}
+    .main-nav ul{display:flex;gap:2rem;list-style:none;}
+    .main-nav a{position:relative;font-weight:500;}
+    .main-nav a::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:2px;background:#00C896;border-radius:2px;transition:width 0.3s ease;}
+    .main-nav a:hover::after,.main-nav a.active::after{width:100%;}
+
+    /* ===================== HERO ===================== */
+    .hero{padding:6rem 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;background:radial-gradient(circle at right, rgba(0,255,240,0.05), transparent 70%);}
+    .hero-copy{flex:1;min-width:320px;}
+    .hero-copy .badge{display:inline-block;background:linear-gradient(135deg,#00C896,#00FFF0);color:#0D1117;font-weight:700;padding:0.4rem 1rem;border-radius:50px;margin-bottom:1rem;letter-spacing:0.5px;}
+    .hero-copy h2{font-size:3rem;margin-bottom:1rem;line-height:1.2;color:#fff;}
+    .hero-copy .lead{color:#AAAAAA;font-size:1.2rem;max-width:550px;margin-bottom:2rem;}
+    .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+    .hero-stats{display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;}
+    .kpi strong{display:block;font-size:2rem;color:#00C896;}
+    .kpi span{color:#AAA;font-size:0.9rem;}
+
+    /* HERO CARD */
+    .hero-aside{flex:1;display:flex;justify-content:center;min-width:320px;}
+    .product-card{background:rgba(17,25,33,0.85);backdrop-filter:blur(10px);border-radius:25px;overflow:hidden;box-shadow:0 10px 40px rgba(0,200,150,0.3);transition:0.4s;}
+    .product-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 15px 50px rgba(0,255,200,0.4);}
+    .product-card img{width:100%;border-bottom:2px solid #00C896;}
+    .card-body{padding:2rem;}
+    .card-body h3{color:#00FFF0;margin-bottom:0.5rem;}
+    .card-body p{color:#AAA;margin-bottom:1rem;}
+    .price-row{display:flex;justify-content:space-between;align-items:center;}
+    .price-row .price{font-size:1.4rem;font-weight:700;color:#00C896;}
+
+    /* ===================== SEÇÕES ===================== */
+    section{padding:5rem 0;}
+    h2{text-align:center;color:#00C896;margin-bottom:1rem;}
+    p.lead{text-align:center;color:#AAAAAA;}
+
+    /* ===================== GRID ===================== */
+    .products-grid,.courses-grid,.features-grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:3rem;}
+    .feature-card,.course-card{background:rgba(17,25,33,0.85);border-radius:20px;padding:2rem;box-shadow:0 10px 40px rgba(0,200,150,0.3);transition:0.4s;}
+    .feature-card:hover,.course-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 15px 50px rgba(0,255,240,0.4);}
+    .feature-card .icon{font-size:2.5rem;margin-bottom:1rem;color:#00C896;}
+    .course-card h3{color:#00FFF0;margin-bottom:0.8rem;}
+    .course-card ul{list-style:none;margin-top:1rem;}
+    .course-card li{margin-bottom:0.5rem;color:#AAAAAA;}
+
+    /* ===================== FAQ ===================== */
+    .faq-accordion{max-width:700px;margin:3rem auto;}
+    .faq-item{margin-bottom:1rem;background:rgba(17,25,33,0.85);border-radius:15px;overflow:hidden;box-shadow:0 3px 10px rgba(0,255,240,0.1);}
+    .faq-question{width:100%;padding:1rem 1.5rem;background:transparent;color:#00FFF0;border:none;font-weight:600;cursor:pointer;text-align:left;}
+    .faq-answer{max-height:0;overflow:hidden;padding:0 1.5rem;background:#111921;transition:max-height 0.4s ease;}
+    .faq-item.open .faq-answer{padding:1rem 1.5rem;max-height:500px;transition:max-height 0.5s ease;}
+
+    /* ===================== DEPÓIMENTOS ===================== */
+    .testimonials-slider{display:flex;gap:2rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:2rem 0;}
+    .testimonial-card{background:rgba(17,25,33,0.85);border-radius:20px;padding:2rem;flex:0 0 300px;box-shadow:0 10px 40px rgba(0,200,150,0.3);scroll-snap-align:start;transition:0.4s;}
+    .testimonial-card blockquote{font-style:italic;color:#CCC;margin-bottom:1rem;}
+
+    /* ===================== RODAPÉ ===================== */
+    footer{background:#111921;color:#AAA;padding:3rem 0;text-align:center;}
+    footer a{color:#00C896;}
+
+    /* RESPONSIVO */
+    @media(max-width:768px){.main-nav ul{flex-direction:column;gap:1rem;}.hero-copy h2{font-size:2rem;}}
+  </style>
 </head>
+
 <body>
-
-<!-- ===== TOPBAR ===== -->
-<div class="topbar">
-  <div class="container topbar-inner">
-    <div class="pill">🔥 Promoção Limitada — 21 Dias de Transformação!</div>
-    <a href="#grupo" class="top-link">Entrar no Grupo VIP</a>
-  </div>
-</div>
-
-<!-- ===== HEADER ===== -->
-<header class="site-header" role="banner">
-  <div class="container header-inner">
-    <a href="#inicio" class="brand" aria-label="Página inicial Domina Academy">
-      <div class="logo">DA</div>
-      <div class="brand-text">
-        <h1>Domina Academy</h1>
-        <p class="tagline">Aprende. Cria. Ganha.</p>
+  <!-- HEADER -->
+  <header>
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">Domina</div>
+        <div class="brand-text">
+          <h1>Academy</h1>
+          <span class="tagline">Aprende. Cria. Ganha.</span>
+        </div>
       </div>
-    </a>
-
-    <nav class="main-nav" role="navigation">
-      <ul>
-        <li><a href="#inicio" class="active">Início</a></li>
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#beneficios">Benefícios</a></li>
-        <li><a href="#planilhas">Planilhas</a></li>
-        <li><a href="#cursos">Cursos</a></li>
-        <li><a href="#roadmap">Roadmap</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contato">Contato</a></li>
-      </ul>
-    </nav>
-
-    <div class="header-cta">
-      <a href="#" class="btn btn-outline">Hotmart</a>
-      <a href="#" class="btn btn-primary pulse">Comprar (M-Pesa)</a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#produtos">Loja</a></li>
+          <li><a href="#cursos">Cursos</a></li>
+          <li><a href="#vip">VIP</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <a href="#vip" class="btn btn-primary">Quero Acessar Agora →</a>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- ===== HERO ===== -->
-<section id="inicio" class="hero">
-  <div class="container hero-inner">
+  <!-- HERO -->
+  <section class="hero container">
     <div class="hero-copy">
-      <div class="badge">Domina o Excel. Transforma tua renda.</div>
+      <span class="badge">Domina Excel</span>
       <h2>Aprende, Cria e Ganha 💼</h2>
-      <p class="lead">Planilhas, cursos e ferramentas práticas para automatizar tua vida financeira e conquistar liberdade digital.</p>
+      <p class="lead">Domina planilhas, finanças e ferramentas digitais para aumentar sua renda de forma prática e eficiente.</p>
       <div class="hero-actions">
-        <a href="#planilhas" class="btn btn-primary btn-lg">Ver Planilhas</a>
-        <a href="#cursos" class="btn btn-outline btn-lg">Ver Cursos</a>
+        <a href="#vip" class="btn btn-primary">Quero Acessar Agora →</a>
+        <a href="#produtos" class="btn btn-outline">Ver Produtos</a>
       </div>
       <div class="hero-stats">
-        <div class="kpi"><strong>+5.000</strong><span>alunos ativos</span></div>
-        <div class="kpi"><strong>97%</strong><span>nível de satisfação</span></div>
-        <div class="kpi"><strong>21</strong><span>dias de progresso</span></div>
+        <div class="kpi"><strong>+5000</strong><span>Alunos</span></div>
+        <div class="kpi"><strong>+200</strong><span>Planilhas</span></div>
+        <div class="kpi"><strong>+50</strong><span>Cursos</span></div>
       </div>
     </div>
-
-    <aside class="hero-aside">
-      <div class="card product-card highlight">
-        <img src="img/hero-product.jpg" alt="Template Financeiro Premium" loading="lazy">
+    <div class="hero-aside">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/400x250.png?text=Produto+Premium" alt="Produto Premium">
         <div class="card-body">
-          <h3>Template Financeiro Premium</h3>
-          <p>Gestão financeira automatizada e pronta para negócios e freelancers.</p>
+          <h3>Template Premium</h3>
+          <p>Organize suas finanças de forma profissional com nosso template exclusivo.</p>
           <div class="price-row">
-            <span class="price">127 MZN</span>
-            <a href="#" class="btn btn-primary">Comprar Agora</a>
+            <span class="price">R$197</span>
+            <a href="#vip" class="btn btn-primary">Comprar</a>
           </div>
         </div>
       </div>
-    </aside>
-  </div>
-</section>
-
-<!-- ===== ANTES E DEPOIS ===== -->
-<section class="before-after">
-  <div class="container">
-    <h2 class="text-center">Antes vs Depois da Domina Academy</h2>
-    <div class="before-after-grid">
-      <div class="card">
-        <h3>Antes 😩</h3>
-        <ul>
-          <li>Planilhas manuais e confusas</li>
-          <li>Falta de controle financeiro</li>
-          <li>Perda de tempo e dinheiro</li>
-          <li>Nenhuma automação</li>
-        </ul>
-      </div>
-      <div class="card highlight">
-        <h3>Depois 🚀</h3>
-        <ul>
-          <li>Planilhas inteligentes e automatizadas</li>
-          <li>Controle total das finanças</li>
-          <li>Tempo livre e clareza financeira</li>
-          <li>Renda extra com conhecimento digital</li>
-        </ul>
-      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== SOBRE ===== -->
-<section id="sobre" class="about">
-  <div class="container about-inner">
-    <div class="about-image">
-      <img src="img/about.jpg" alt="Instrutores da Domina Academy" loading="lazy">
-    </div>
-    <div class="about-content">
-      <h2>Quem Somos</h2>
-      <p>Somos uma academia digital que transforma habilidades em resultados reais. Acreditamos que aprender Excel e gestão financeira pode ser o primeiro passo para a tua liberdade financeira.</p>
-      <ul>
-        <li>🎯 Conteúdo 100% prático e aplicável</li>
-        <li>💡 Aulas rápidas, diretas e eficazes</li>
-        <li>📊 Templates e dashboards de alto impacto</li>
-        <li>🤝 Comunidade ativa e suporte próximo</li>
-      </ul>
-      <a href="#cursos" class="btn btn-primary mt-2">Conhecer Cursos</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== BENEFÍCIOS ===== -->
-<section id="beneficios" class="features">
-  <div class="container text-center">
-    <h2>Por que escolher a Domina Academy?</h2>
-    <p class="lead">Aprende com especialistas, aplica com ferramentas prontas e conquista resultados reais.</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="icon">⚙️</div>
-        <h3>Automação Inteligente</h3>
-        <p>Planilhas com fórmulas e dashboards interativos prontos para uso.</p>
-      </div>
-      <div class="feature-card">
-        <div class="icon">🎓</div>
-        <h3>Aprendizagem Rápida</h3>
-        <p>Videoaulas curtas, práticas e com acompanhamento 24/7.</p>
-      </div>
-      <div class="feature-card">
-        <div class="icon">💼</div>
-        <h3>Transformação Profissional</h3>
-        <p>Domina o Excel, organiza tuas finanças e cria novas fontes de renda.</p>
-      </div>
-      <div class="feature-card">
-        <div class="icon">🚀</div>
-        <h3>Resultados Comprovados</h3>
-        <p>Milhares de alunos aplicando o método e colhendo ganhos reais.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== PLANILHAS ===== -->
-<section id="planilhas" class="products">
-  <div class="container">
-    <h2 class="text-center">Loja — Planilhas & Templates</h2>
-    <p class="lead text-center">Ferramentas prontas para vendas, gestão e finanças pessoais.</p>
+  <!-- LOJA / PRODUTOS -->
+  <section id="produtos" class="container">
+    <h2>Nossos Produtos</h2>
+    <p class="lead">Ferramentas e planilhas criadas para acelerar seus resultados.</p>
     <div class="products-grid">
-      <div class="card product-card">
-        <img src="img/produto1.jpg" alt="Planilha Fluxo de Caixa" loading="lazy">
-        <div class="card-body">
-          <h3>Planilha Fluxo de Caixa</h3>
-          <p>Controle entradas, saídas e lucros mensais automaticamente.</p>
-          <div class="price-row">
-            <span class="price">97 MZN</span>
-            <a href="#" class="btn btn-primary">Comprar</a>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h3>Planilha Financeira</h3>
+        <p>Controle completo do seu orçamento pessoal e profissional.</p>
+        <a href="#vip" class="btn btn-primary">Comprar</a>
       </div>
-      <div class="card product-card">
-        <img src="img/produto2.jpg" alt="Planilha Controle de Vendas" loading="lazy">
-        <div class="card-body">
-          <h3>Controle de Vendas</h3>
-          <p>Registra vendas, calcula comissões e lucros automáticos.</p>
-          <div class="price-row">
-            <span class="price">77 MZN</span>
-            <a href="#" class="btn btn-primary">Comprar</a>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="icon">🗂️</div>
+        <h3>Gestão de Projetos</h3>
+        <p>Organize tarefas, prazos e metas com eficiência máxima.</p>
+        <a href="#vip" class="btn btn-primary">Comprar</a>
       </div>
-      <div class="card product-card">
-        <img src="img/produto3.jpg" alt="Gestão de Estoque" loading="lazy">
-        <div class="card-body">
-          <h3>Gestão de Estoque</h3>
-          <p>Organiza produtos, fornecedores e relatórios automatizados.</p>
-          <div class="price-row">
-            <span class="price">147 MZN</span>
-            <a href="#" class="btn btn-primary">Comprar</a>
-          </div>
-        </div>
-      </div>
-      <div class="card product-card">
-        <img src="img/produto4.jpg" alt="Dashboard Inteligente" loading="lazy">
-        <div class="card-body">
-          <h3>Dashboard Inteligente</h3>
-          <p>Visualize métricas e KPIs em tempo real, pronto para análise.</p>
-          <div class="price-row">
-            <span class="price">197 MZN</span>
-            <a href="#" class="btn btn-primary">Comprar</a>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="icon">💹</div>
+        <h3>Investimentos</h3>
+        <p>Planilhas prontas para acompanhar e analisar seus investimentos.</p>
+        <a href="#vip" class="btn btn-primary">Comprar</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== CURSOS ===== -->
-<section id="cursos" class="courses">
-  <div class="container">
-    <h2 class="text-center">Cursos — Aprende com os Melhores</h2>
-    <p class="lead text-center">Domina Excel, vendas e produtividade em poucos dias.</p>
+  <!-- CURSOS -->
+  <section id="cursos" class="container">
+    <h2>Cursos em Destaque</h2>
+    <p class="lead">Aprenda na prática com nossos cursos passo a passo.</p>
     <div class="courses-grid">
-      <div class="card course-card">
-        <div class="card-body">
-          <h3>Curso Excel Money</h3>
-          <p>Aprende Excel financeiro do zero e cria planilhas que geram renda.</p>
-          <ul>
-            <li>+20 aulas práticas</li>
-            <li>Planilhas incluídas</li>
-            <li>Certificado digital</li>
-          </ul>
-          <a href="#" class="btn btn-primary">Inscrever-se</a>
-        </div>
+      <div class="course-card">
+        <h3>Excel Avançado</h3>
+        <ul>
+          <li>Macros e automações</li>
+          <li>Dashboards profissionais</li>
+          <li>Projetos reais</li>
+        </ul>
+        <a href="#vip" class="btn btn-primary">Inscrever-se</a>
       </div>
-      <div class="card course-card">
-        <div class="card-body">
-          <h3>Desafio 21 Dias</h3>
-          <p>Transforma tua rotina financeira em 21 dias.</p>
-          <ul>
-            <li>Grupo exclusivo no WhatsApp</li>
-            <li>Suporte diário</li>
-            <li>Bônus e planilhas premium</li>
-          </ul>
-          <a href="#" class="btn btn-primary">Participar</a>
-        </div>
+      <div class="course-card">
+        <h3>Finanças Digitais</h3>
+        <ul>
+          <li>Planejamento financeiro</li>
+          <li>Controle de investimentos</li>
+          <li>Fluxo de caixa automatizado</li>
+        </ul>
+        <a href="#vip" class="btn btn-primary">Inscrever-se</a>
       </div>
-      <div class="card course-card">
-        <div class="card-body">
-          <h3>Master Class Dashboard</h3>
-          <p>Cria dashboards interativos que impressionam clientes e gestores.</p>
-          <ul>
-            <li>Aulas gravadas + lives</li>
-            <li>Exercícios aplicados</li>
-            <li>Certificado avançado</li>
-          </ul>
-          <a href="#" class="btn btn-primary">Inscrever-se</a>
-        </div>
+      <div class="course-card">
+        <h3>Automação de Negócios</h3>
+        <ul>
+          <li>Templates prontos</li>
+          <li>Integrações com ferramentas</li>
+          <li>Resultados rápidos</li>
+        </ul>
+        <a href="#vip" class="btn btn-primary">Inscrever-se</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== ROADMAP ===== -->
-<section id="roadmap" class="roadmap">
-  <div class="container text-center">
-    <h2>Roadmap Domina Academy</h2>
-    <p class="lead">Teu caminho até a liberdade digital.</p>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-badge">Semana 1</div>
-        <div class="timeline-content">
-          <h3>Introdução ao Excel</h3>
-          <p>Aprende fórmulas básicas e organização de dados.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-badge">Semana 2</div>
-        <div class="timeline-content">
-          <h3>Planilhas Automáticas</h3>
-          <p>Cria modelos inteligentes e dashboards iniciais.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-badge">Semana 3</div>
-        <div class="timeline-content">
-          <h3>Gestão Financeira</h3>
-          <p>Controle de fluxo de caixa, vendas e estoque.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-badge">Semana 4</div>
-        <div class="timeline-content">
-          <h3>Monetização</h3>
-          <p>Aprende a vender planilhas e monetizar conhecimentos.</p>
-        </div>
-      </div>
+  <!-- LISTA VIP -->
+  <section id="vip" class="container">
+    <h2>Seja VIP</h2>
+    <p class="lead">Acesse conteúdos exclusivos, descontos e suporte prioritário.</p>
+    <div style="display:flex;justify-content:center;margin-top:2rem;">
+      <a href="#" class="btn btn-primary btn-lg">Entrar na Lista VIP →</a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== TESTEMUNHOS ===== -->
-<section class="testimonials">
-  <div class="container">
-    <h2 class="text-center">Histórias Reais. Resultados Reais.</h2>
+  <!-- DEPÓIMENTOS -->
+  <section class="container">
+    <h2>O que dizem nossos alunos</h2>
+    <p class="lead">Histórias reais de quem já transformou sua rotina com a Domina Academy.</p>
     <div class="testimonials-slider">
       <div class="testimonial-card">
-        <blockquote>“Em 3 semanas consegui automatizar toda a gestão financeira da minha loja. Simplesmente incrível.”</blockquote>
-        <p><strong>— Ana M., Maputo</strong></p>
+        <blockquote>“Aprendi mais em 1 mês do que em anos sozinho. Recomendo demais!”</blockquote>
+        <strong>– João M.</strong>
       </div>
       <div class="testimonial-card">
-        <blockquote>“Aprendi Excel com a Domina Academy e comecei a vender planilhas. Já recuperei o investimento!”</blockquote>
-        <p><strong>— João P., Beira</strong></p>
+        <blockquote>“As planilhas e cursos são de altíssimo nível. Transformador!”</blockquote>
+        <strong>– Maria S.</strong>
       </div>
       <div class="testimonial-card">
-        <blockquote>“As aulas práticas e o suporte fazem toda diferença. Minha produtividade disparou!”</blockquote>
-        <p><strong>— Carla S., Nampula</strong></p>
+        <blockquote>“O suporte VIP fez toda diferença para meus resultados.”</blockquote>
+        <strong>– Pedro L.</strong>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== GARANTIA ===== -->
-<section class="guarantee">
-  <div class="container text-center">
-    <img src="img/garantia.png" alt="Garantia de Satisfação" class="guarantee-icon">
-    <h2>Garantia de Satisfação 100%</h2>
-    <p>Experimenta nossos cursos e planilhas por 7 dias. Se não te ajudar, devolvemos teu dinheiro — sem perguntas.</p>
-  </div>
-</section>
-
-<!-- ===== AFILIADOS ===== -->
-<section class="affiliates">
-  <div class="container text-center">
-    <h2>Torna-te um Afiliado Domina 🚀</h2>
-    <p>Recomenda nossos cursos e ganha comissões por cada venda gerada. Simples, transparente e lucrativo.</p>
-    <a href="#" class="btn btn-primary btn-lg">Quero Ser Afiliado</a>
-  </div>
-</section>
-
-<!-- ===== FAQ ===== -->
-<section id="faq" class="faq">
-  <div class="container">
-    <h2 class="text-center">Perguntas Frequentes</h2>
+  <!-- FAQ -->
+  <section id="faq" class="container">
+    <h2>Perguntas Frequentes</h2>
     <div class="faq-accordion">
       <div class="faq-item">
-        <button class="faq-question">Como recebo os materiais?</button>
-        <div class="faq-answer">Após a compra, recebes tudo automaticamente via e-mail e WhatsApp.</div>
+        <button class="faq-question">Como acesso os cursos?</button>
+        <div class="faq-answer"><p>Após a compra, você recebe acesso imediato à plataforma online.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question">Posso editar as planilhas?</button>
-        <div class="faq-answer">Sim! Todas as planilhas são 100% editáveis no Excel.</div>
+        <button class="faq-question">Os produtos funcionam em qualquer computador?</button>
+        <div class="faq-answer"><p>Sim! Nossas planilhas são compatíveis com Excel e Google Sheets.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question">Há suporte?</button>
-        <div class="faq-answer">Sim, suporte via WhatsApp e e-mail durante 30 dias após a compra.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Existe garantia de satisfação?</button>
-        <div class="faq-answer">Sim! Garantia de 7 dias para experimentar os produtos e cursos.</div>
+        <button class="faq-question">Posso receber suporte VIP?</button>
+        <div class="faq-answer"><p>Sim! Usuários VIP têm atendimento prioritário e materiais exclusivos.</p></div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== NEWSLETTER ===== -->
-<section class="newsletter">
-  <div class="container text-center">
-    <h2>Junta-te à Comunidade Domina 🚀</h2>
-    <p>Recebe dicas exclusivas e descontos antes de todos.</p>
-    <form class="newsletter-form">
-      <input type="email" placeholder="Teu e-mail" required>
-      <button type="submit" class="btn btn-primary">
-<!-- ===== VOLTAR AO TOPO ===== -->
-<button id="back-to-top" aria-label="Voltar ao topo">↑</button>
+  <!-- RODAPÉ -->
+  <footer>
+    <p>© 2025 Domina Academy. Todos os direitos reservados.</p>
+    <p>Siga-nos nas redes sociais: 
+      <a href="#">Instagram</a> | <a href="#">YouTube</a> | <a href="#">WhatsApp</a>
+    </p>
+  </footer>
 
-<!-- ===== SCRIPTS ===== -->
-<script>
-// ===== MENU MOBILE =====
-const nav = document.querySelector('.main-nav');
-const header = document.querySelector('.site-header');
-const backToTop = document.getElementById('back-to-top');
-
-// Botão de voltar ao topo
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backToTop.classList.add('visible');
-  } else {
-    backToTop.classList.remove('visible');
-  }
-});
-
-backToTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// ===== FAQ Accordion =====
-const faqItems = document.querySelectorAll('.faq-item');
-
-faqItems.forEach(item => {
-  const question = item.querySelector('.faq-question');
-  question.addEventListener('click', () => {
-    item.classList.toggle('open');
-    const answer = item.querySelector('.faq-answer');
-    if (item.classList.contains('open')) {
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-    } else {
-      answer.style.maxHeight = null;
-    }
-  });
-});
-
-// ===== ANIMAÇÕES SUAVES DE SCROLL =====
-const smoothLinks = document.querySelectorAll('a[href^="#"]');
-smoothLinks.forEach(link => {
-  link.addEventListener('click', function(e) {
-    const targetId = this.getAttribute('href');
-    if (targetId.startsWith("#")) {
-      e.preventDefault();
-      const target = document.querySelector(targetId);
-      if (target) {
-        window.scrollTo({
-          top: target.offsetTop - 80,
-          behavior: 'smooth'
-        });
-      }
-    }
-  });
-});
-
-// ===== NEWSLETTER MOCK =====
-const form = document.querySelector('.newsletter-form');
-if (form) {
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const email = form.querySelector('input').value;
-    if (email.trim() !== "") {
-      alert(`🎉 Obrigado por te inscrever, ${email}!`);
-      form.reset();
-    }
-  });
-}
-</script>
-
-<!-- ===== STYLE INTERNO OPCIONAL (para finalizar visual) ===== -->
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    background: #00C896;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    font-size: 1.4rem;
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    z-index: 999;
-  }
-  #back-to-top.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .faq-item {
-    margin-bottom: 15px;
-    border: 1px solid #e5e5e5;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all .3s ease;
-  }
-  .faq-question {
-    width: 100%;
-    text-align: left;
-    background: #f9f9f9;
-    padding: 14px 18px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    outline: none;
-  }
-  .faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: #fff;
-    padding: 0 18px;
-  }
-  .faq-item.open .faq-answer {
-    padding: 12px 18px;
-  }
-
-  footer .footer-bottom {
-    margin-top: 20px;
-    padding-top: 10px;
-    font-size: 0.9rem;
-    color: #666;
-  }
-
-  /* Responsividade */
-  @media (max-width: 768px) {
-    .header-inner, .footer-grid, .hero-inner {
-      flex-direction: column;
-      text-align: center;
-    }
-    .main-nav ul {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  }
-</style>
-
+  <!-- ===================== SCRIPTS ===================== -->
+  <script>
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+  </script>
 </body>
 </html>
